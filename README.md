@@ -1,6 +1,7 @@
 ## UniDet3D: Multi-dataset Indoor 3D Object Detection
 
 **News**:
+ * :fire: December, 2024. UniDet3D is now accepted at AAAI 2025.
  * :fire: September, 2024. UniDet3D is state-of-the-art in 6 indoor benchmarks: <br>
  ScanNet [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/unidet3d-multi-dataset-indoor-3d-object/3d-object-detection-on-scannetv2)](https://paperswithcode.com/sota/3d-object-detection-on-scannetv2?p=unidet3d-multi-dataset-indoor-3d-object) <br>
  ARKitScenes [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/unidet3d-multi-dataset-indoor-3d-object/3d-object-detection-on-arkitscenes)](https://paperswithcode.com/sota/3d-object-detection-on-arkitscenes?p=unidet3d-multi-dataset-indoor-3d-object) <br>
