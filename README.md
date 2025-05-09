@@ -101,10 +101,13 @@ Please refer to the UniDet3D [checkpoint](https://github.com/filapro/unidet3d/re
 If you find this work useful for your research, please cite our paper:
 
 ```
-@article{kolodiazhnyi2024unidet3d,
-  title={UniDet3D: Multi-dataset Indoor 3D Object Detection},
-  author={Kolodiazhnyi, Maxim and Vorontsova, Anna and Skripkin, Matvey and Rukhovich, Danila and Konushin, Anton},
-  journal={arXiv preprint arXiv:2409.04234},
-  year={2024}
+@inproceedings{kolodiazhnyi2025unidet3d,
+  title={Unidet3d: Multi-dataset indoor 3d object detection},
+  author={Kolodiazhnyi, Maksim and Vorontsova, Anna and Skripkin, Matvey and Rukhovich, Danila and Konushin, Anton},
+  booktitle={Proceedings of the AAAI Conference on Artificial Intelligence},
+  volume={39},
+  number={4},
+  pages={4365--4373},
+  year={2025}
 }
 ```
