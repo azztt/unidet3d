@@ -19,7 +19,7 @@ This repository contains an implementation of UniDet3D, a multi-dataset indoor 3
 > [Danila Rukhovich](https://github.com/filaPro),
 > [Anton Konushin](https://scholar.google.com/citations?user=ZT_k-wMAAAAJ)
 > <br>
-> Artificial Intelligence Research Institute<br>
+> Artificial Intelligence Research Institute <img src="https://github.com/user-attachments/assets/c6304076-153a-4e3b-b58c-db522f7f78fe" width="50"/> <br>
 > https://arxiv.org/abs/2409.04234
 
 ### Installation
