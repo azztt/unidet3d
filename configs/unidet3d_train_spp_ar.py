@@ -586,16 +586,17 @@ train_dataloader = dict(
     sampler=dict(type='DefaultSampler', shuffle=True),
     dataset=dict(
         type='ConcatDataset_',
-        datasets=[dict(
-                    type=dataset_type_scannet,
-                    ann_file='scannet_infos_train.pkl',
-                    data_prefix=data_prefix_scannet,
-                    data_root=data_root_scannet,
-                    metainfo=metainfo_scannet,
-                    pipeline=train_pipeline_scannet,
-                    ignore_index=max_class_scannet,
-                    scene_idxs=None,
-                    test_mode=False)] #+ \
+        datasets=[] + \
+                # [dict(
+                #     type=dataset_type_scannet,
+                #     ann_file='scannet_infos_train.pkl',
+                #     data_prefix=data_prefix_scannet,
+                #     data_root=data_root_scannet,
+                #     metainfo=metainfo_scannet,
+                #     pipeline=train_pipeline_scannet,
+                #     ignore_index=max_class_scannet,
+                #     scene_idxs=None,
+                #     test_mode=False)] + \
                 #  [dict(
                 #     type=dataset_type_s3dis,
                 #     data_root=data_root_s3dis,
@@ -622,23 +623,24 @@ train_dataloader = dict(
                 #     data_root=data_root_3rscan,
                 #     pipeline=train_pipeline_3rscan,
                 #     test_mode=False)] + \
-                # [dict(
-                #     type=dataset_type_scannetpp,
-                #     ann_file='scannetpp_infos_train.pkl',
-                #     partition=0.33,
-                #     data_prefix=data_prefix_scannetpp,
-                #     data_root=data_root_scannetpp,
-                #     pipeline=train_pipeline_scannetpp,
-                #     test_mode=False)] + \
-                # [dict(
-                #     type=dataset_type_arkitscenes,
-                #     ann_file='arkitscenes_offline_infos_train.pkl',
-                #     partition=0.08,
-                #     data_prefix=data_prefix_arkitscenes,
-                #     data_root=data_root_arkitscenes,
-                #     pipeline=train_pipeline_arkitscenes,
-                #     test_mode=False)] 
-                    ))
+                [dict(
+                    type=dataset_type_scannetpp,
+                    ann_file='scannetpp_infos_train.pkl',
+                    partition=0.33,
+                    data_prefix=data_prefix_scannetpp,
+                    data_root=data_root_scannetpp,
+                    pipeline=train_pipeline_scannetpp,
+                    test_mode=False)] + \
+                [dict(
+                    type=dataset_type_arkitscenes,
+                    ann_file='arkitscenes_offline_infos_train.pkl',
+                    partition=0.08,
+                    data_prefix=data_prefix_arkitscenes,
+                    data_root=data_root_arkitscenes,
+                    pipeline=train_pipeline_arkitscenes,
+                    test_mode=False)] 
+    )
+)
 
 val_dataloader = dict(
     batch_size=1,
@@ -649,15 +651,15 @@ val_dataloader = dict(
     dataset=dict(
         type='ConcatDataset_',
         datasets= \
-                [dict(
-                    type=dataset_type_scannet,
-                    ann_file='scannet_infos_val.pkl',
-                    data_prefix=data_prefix_scannet,
-                    data_root=data_root_scannet,
-                    metainfo=metainfo_scannet,
-                    pipeline=test_pipeline_scannet,
-                    ignore_index=max_class_scannet,
-                    test_mode=True)] #+ \
+                # [dict(
+                #     type=dataset_type_scannet,
+                #     ann_file='scannet_infos_val.pkl',
+                #     data_prefix=data_prefix_scannet,
+                #     data_root=data_root_scannet,
+                #     metainfo=metainfo_scannet,
+                #     pipeline=test_pipeline_scannet,
+                #     ignore_index=max_class_scannet,
+                #     test_mode=True)] + \
                 # [dict(
                 #     type=dataset_type_s3dis,
                 #     data_root=data_root_s3dis,
@@ -681,31 +683,38 @@ val_dataloader = dict(
                 #     data_root=data_root_3rscan,
                 #     pipeline=test_pipeline_3rscan,
                 #     test_mode=True)] + \
-                # [dict(
-                #     type=dataset_type_scannetpp,
-                #     ann_file='scannetpp_infos_val.pkl',
-                #     data_prefix=data_prefix_scannetpp,
-                #     data_root=data_root_scannetpp,
-                #     pipeline=test_pipeline_scannetpp,
-                #     test_mode=True)] + \
-                # [dict(
-                #     type=dataset_type_arkitscenes,
-                #     ann_file='arkitscenes_offline_infos_val.pkl',
-                #     data_prefix=data_prefix_arkitscenes,
-                #     data_root=data_root_arkitscenes,
-                #     pipeline=test_pipeline_arkitscenes,
-                #     test_mode=True)] 
-                    ))
+                [dict(
+                    type=dataset_type_scannetpp,
+                    ann_file='scannetpp_infos_val.pkl',
+                    data_prefix=data_prefix_scannetpp,
+                    data_root=data_root_scannetpp,
+                    pipeline=test_pipeline_scannetpp,
+                    test_mode=True)] + \
+                [dict(
+                    type=dataset_type_arkitscenes,
+                    ann_file='arkitscenes_offline_infos_val.pkl',
+                    data_prefix=data_prefix_arkitscenes,
+                    data_root=data_root_arkitscenes,
+                    pipeline=test_pipeline_arkitscenes,
+                    test_mode=True)] 
+    )
+)
 
 test_dataloader = val_dataloader
 
 load_from = 'work_dirs/tmp/oneformer3d_1xb4_scannet.pth'
 
 test_evaluator = dict(type='IndoorMetric_', 
-                      datasets=['scannet'],
-                      datasets_classes=[classes_scannet])
+                      datasets=['scannet', 's3dis', 'multiscan', '3rscan'],
+                      datasets_classes=[classes_scannet, 
+                                       classes_s3dis, 
+                                       classes_multiscan, 
+                                       classes_3rscan],)
 
-val_evaluator = test_evaluator
+val_evaluator = dict(type='IndoorMetric_',
+                     datasets=['scannetpp', 'arkitscenes'],
+                     datasets_classes=[classes_scannetpp,
+                                      classes_arkitscenes],)
 
 optim_wrapper = dict(
     type='OptimWrapper',
