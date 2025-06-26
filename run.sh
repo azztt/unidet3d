@@ -1,0 +1,1 @@
+python tools/train.py configs/unidet3d_train_spp_ar.py 2>&1 | tee run_logs/unidet3d_train_spp_ar.log

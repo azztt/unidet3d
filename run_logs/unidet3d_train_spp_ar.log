@@ -1,0 +1,2205 @@
+/opt/conda/lib/python3.10/site-packages/MinkowskiEngine/__init__.py:36: UserWarning: The environment variable `OMP_NUM_THREADS` not set. MinkowskiEngine will automatically set `OMP_NUM_THREADS=16`. If you want to set `OMP_NUM_THREADS` manually, please export it on the command line before running a python script. e.g. `export OMP_NUM_THREADS=12; python your_program.py`. It is recommended to set it below 24.
+  warnings.warn(
+06/26 01:16:57 - mmengine - INFO - 
+------------------------------------------------------------
+System environment:
+    sys.platform: linux
+    Python: 3.10.13 (main, Sep 11 2023, 13:44:35) [GCC 11.2.0]
+    CUDA available: True
+    numpy_random_seed: 1458332434
+    GPU 0,1: NVIDIA RTX A5000
+    CUDA_HOME: /usr/local/cuda
+    NVCC: Cuda compilation tools, release 12.1, V12.1.105
+    GCC: gcc (Ubuntu 9.4.0-1ubuntu1~20.04.2) 9.4.0
+    PyTorch: 2.1.2
+    PyTorch compiling details: PyTorch built with:
+  - GCC 9.3
+  - C++ Version: 201703
+  - Intel(R) oneAPI Math Kernel Library Version 2023.1-Product Build 20230303 for Intel(R) 64 architecture applications
+  - Intel(R) MKL-DNN v3.1.1 (Git Hash 64f6bcbcbab628e96f33a62c3e975f8535a7bde4)
+  - OpenMP 201511 (a.k.a. OpenMP 4.5)
+  - LAPACK is enabled (usually provided by MKL)
+  - NNPACK is enabled
+  - CPU capability usage: AVX512
+  - CUDA Runtime 12.1
+  - NVCC architecture flags: -gencode;arch=compute_50,code=sm_50;-gencode;arch=compute_60,code=sm_60;-gencode;arch=compute_61,code=sm_61;-gencode;arch=compute_70,code=sm_70;-gencode;arch=compute_75,code=sm_75;-gencode;arch=compute_80,code=sm_80;-gencode;arch=compute_86,code=sm_86;-gencode;arch=compute_90,code=sm_90
+  - CuDNN 8.9.2
+  - Magma 2.6.1
+  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, CUDA_VERSION=12.1, CUDNN_VERSION=8.9.2, CXX_COMPILER=/opt/rh/devtoolset-9/root/usr/bin/c++, CXX_FLAGS= -D_GLIBCXX_USE_CXX11_ABI=0 -fabi-version=11 -fvisibility-inlines-hidden -DUSE_PTHREADPOOL -DNDEBUG -DUSE_KINETO -DLIBKINETO_NOROCTRACER -DUSE_FBGEMM -DUSE_QNNPACK -DUSE_PYTORCH_QNNPACK -DUSE_XNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE -O2 -fPIC -Wall -Wextra -Werror=return-type -Werror=non-virtual-dtor -Werror=bool-operation -Wnarrowing -Wno-missing-field-initializers -Wno-type-limits -Wno-array-bounds -Wno-unknown-pragmas -Wno-unused-parameter -Wno-unused-function -Wno-unused-result -Wno-strict-overflow -Wno-strict-aliasing -Wno-stringop-overflow -Wno-psabi -Wno-error=pedantic -Wno-error=old-style-cast -Wno-invalid-partial-specialization -Wno-unused-private-field -Wno-aligned-allocation-unavailable -Wno-missing-braces -fdiagnostics-color=always -faligned-new -Wno-unused-but-set-variable -Wno-maybe-uninitialized -fno-math-errno -fno-trapping-math -Werror=format -Werror=cast-function-type -Wno-stringop-overflow, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, PERF_WITH_AVX512=1, TORCH_DISABLE_GPU_ASSERTS=ON, TORCH_VERSION=2.1.2, USE_CUDA=ON, USE_CUDNN=ON, USE_EXCEPTION_PTR=1, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=ON, USE_NNPACK=ON, USE_OPENMP=ON, USE_ROCM=OFF, 
+
+    TorchVision: 0.16.2
+    OpenCV: 4.7.0
+    MMEngine: 0.9.0
+
+Runtime environment:
+    cudnn_benchmark: False
+    mp_cfg: {'mp_start_method': 'fork', 'opencv_num_threads': 0}
+    dist_cfg: {'backend': 'nccl'}
+    seed: 1458332434
+    Distributed launcher: none
+    Distributed training: False
+    GPU number: 1
+------------------------------------------------------------
+
+06/26 01:16:58 - mmengine - INFO - Config:
+classes_3rscan = [
+    'cabinet',
+    'bed',
+    'chair',
+    'sofa',
+    'table',
+    'door',
+    'window',
+    'bookshelf',
+    'picture',
+    'counter',
+    'desk',
+    'curtain',
+    'refrigerator',
+    'showercurtrain',
+    'toilet',
+    'sink',
+    'bathtub',
+    'otherfurniture',
+]
+classes_arkitscenes = [
+    'cabinet',
+    'refrigerator',
+    'shelf',
+    'stove',
+    'bed',
+    'sink',
+    'washer',
+    'toilet',
+    'bathtub',
+    'oven',
+    'dishwasher',
+    'fireplace',
+    'stool',
+    'chair',
+    'table',
+    'tv_monitor',
+    'sofa',
+]
+classes_multiscan = [
+    'door',
+    'table',
+    'chair',
+    'cabinet',
+    'window',
+    'sofa',
+    'microwave',
+    'pillow',
+    'tv_monitor',
+    'curtain',
+    'trash_can',
+    'suitcase',
+    'sink',
+    'backpack',
+    'bed',
+    'refrigerator',
+    'toilet',
+]
+classes_s3dis = [
+    'table',
+    'chair',
+    'sofa',
+    'bookcase',
+    'board',
+]
+classes_scannet = [
+    'cabinet',
+    'bed',
+    'chair',
+    'sofa',
+    'table',
+    'door',
+    'window',
+    'bookshelf',
+    'picture',
+    'counter',
+    'desk',
+    'curtain',
+    'refrigerator',
+    'showercurtrain',
+    'toilet',
+    'sink',
+    'bathtub',
+    'otherfurniture',
+]
+classes_scannetpp = [
+    'table',
+    'door',
+    'ceiling lamp',
+    'cabinet',
+    'blinds',
+    'curtain',
+    'chair',
+    'storage cabinet',
+    'office chair',
+    'bookshelf',
+    'whiteboard',
+    'window',
+    'box',
+    'monitor',
+    'shelf',
+    'heater',
+    'kitchen cabinet',
+    'sofa',
+    'bed',
+    'trash can',
+    'book',
+    'plant',
+    'blanket',
+    'tv',
+    'computer tower',
+    'refrigerator',
+    'jacket',
+    'sink',
+    'bag',
+    'picture',
+    'pillow',
+    'towel',
+    'suitcase',
+    'backpack',
+    'crate',
+    'keyboard',
+    'rack',
+    'toilet',
+    'printer',
+    'poster',
+    'painting',
+    'microwave',
+    'shoes',
+    'socket',
+    'bottle',
+    'bucket',
+    'cushion',
+    'basket',
+    'shoe rack',
+    'telephone',
+    'file folder',
+    'laptop',
+    'plant pot',
+    'exhaust fan',
+    'cup',
+    'coat hanger',
+    'light switch',
+    'speaker',
+    'table lamp',
+    'kettle',
+    'smoke detector',
+    'container',
+    'power strip',
+    'slippers',
+    'paper bag',
+    'mouse',
+    'cutting board',
+    'toilet paper',
+    'paper towel',
+    'pot',
+    'clock',
+    'pan',
+    'tap',
+    'jar',
+    'soap dispenser',
+    'binder',
+    'bowl',
+    'tissue box',
+    'whiteboard eraser',
+    'toilet brush',
+    'spray bottle',
+    'headphones',
+    'stapler',
+    'marker',
+]
+custom_hooks = [
+    dict(after_iter=True, type='EmptyCacheHook'),
+]
+custom_imports = dict(imports=[
+    'unidet3d',
+])
+data_prefix_3rscan = dict(
+    pts='points',
+    pts_instance_mask='instance_mask',
+    pts_semantic_mask='semantic_mask',
+    sp_pts_mask='super_points_spt')
+data_prefix_arkitscenes = dict(
+    pts='offline_prepared_data', sp_pts_mask='super_points')
+data_prefix_multiscan = dict(
+    pts='points',
+    pts_instance_mask='instance_mask',
+    pts_semantic_mask='semantic_mask',
+    sp_pts_mask='super_points')
+data_prefix_s3dis = dict(
+    pts='points',
+    pts_instance_mask='instance_mask',
+    pts_semantic_mask='semantic_mask',
+    sp_pts_mask='super_points')
+data_prefix_scannet = dict(
+    pts='points',
+    pts_instance_mask='instance_mask',
+    pts_semantic_mask='semantic_mask',
+    sp_pts_mask='super_points')
+data_prefix_scannetpp = dict(
+    pts='points',
+    pts_instance_mask='instance_mask',
+    pts_semantic_mask='semantic_mask',
+    sp_pts_mask='super_points_spt')
+data_root_3rscan = 'data/3rscan'
+data_root_arkitscenes = 'data/arkitscenes'
+data_root_multiscan = 'data/multiscan/bins'
+data_root_s3dis = 'data/s3dis/'
+data_root_scannet = 'data/scannet/'
+data_root_scannetpp = 'data/scannetpp/bins'
+dataset_type_3rscan = 'ThreeRScan_'
+dataset_type_arkitscenes = 'ARKitScenesOfflineDataset'
+dataset_type_multiscan = 'MultiScan_'
+dataset_type_s3dis = 'S3DISSegDetDataset'
+dataset_type_scannet = 'ScanNetDetDataset'
+dataset_type_scannetpp = 'Scannetpp_'
+default_hooks = dict(
+    checkpoint=dict(
+        _scope_='mmdet3d',
+        interval=1,
+        max_keep_ckpts=16,
+        type='CheckpointHook'),
+    logger=dict(_scope_='mmdet3d', interval=50, type='LoggerHook'),
+    param_scheduler=dict(_scope_='mmdet3d', type='ParamSchedulerHook'),
+    sampler_seed=dict(_scope_='mmdet3d', type='DistSamplerSeedHook'),
+    timer=dict(_scope_='mmdet3d', type='IterTimerHook'),
+    visualization=dict(_scope_='mmdet3d', type='Det3DVisualizationHook'))
+default_scope = 'mmdet3d'
+env_cfg = dict(
+    cudnn_benchmark=False,
+    dist_cfg=dict(backend='nccl'),
+    mp_cfg=dict(mp_start_method='fork', opencv_num_threads=0))
+launcher = 'none'
+load_from = 'work_dirs/tmp/oneformer3d_1xb4_scannet.pth'
+log_level = 'INFO'
+log_processor = dict(
+    _scope_='mmdet3d', by_epoch=True, type='LogProcessor', window_size=50)
+max_class_scannet = 20
+metainfo_scannet = dict(classes=[
+    'cabinet',
+    'bed',
+    'chair',
+    'sofa',
+    'table',
+    'door',
+    'window',
+    'bookshelf',
+    'picture',
+    'counter',
+    'desk',
+    'curtain',
+    'refrigerator',
+    'showercurtrain',
+    'toilet',
+    'sink',
+    'bathtub',
+    'otherfurniture',
+])
+model = dict(
+    backbone=dict(
+        num_planes=[
+            32,
+            64,
+            96,
+            128,
+            160,
+        ],
+        return_blocks=True,
+        type='SpConvUNet'),
+    bbox_by_mask=[
+        True,
+    ],
+    criterion=dict(
+        bbox_loss_rotated=dict(
+            mode='diou', reduction='none', type='UniDet3DRotatedIoU3DLoss'),
+        bbox_loss_simple=dict(
+            mode='diou', reduction='none', type='UniDet3DAxisAlignedIoULoss'),
+        datasets=[
+            'scannet',
+        ],
+        datasets_weights=[
+            1,
+        ],
+        iter_matcher=True,
+        loss_weight=[
+            0.5,
+            1.0,
+        ],
+        matcher=dict(
+            costs=[
+                dict(type='QueryClassificationCost', weight=0.5),
+                dict(
+                    loss_rotated=dict(
+                        mode='diou',
+                        reduction='none',
+                        type='UniDet3DRotatedIoU3DLoss'),
+                    loss_simple=dict(
+                        mode='diou',
+                        reduction='none',
+                        type='UniDet3DAxisAlignedIoULoss'),
+                    type='BboxCostJointTraining',
+                    weight=2.0),
+            ],
+            type='UniMatcher'),
+        non_object_weight=0.1,
+        topk=[
+            6,
+        ],
+        type='UniDet3DCriterion'),
+    data_preprocessor=dict(type='Det3DDataPreprocessor_'),
+    decoder=dict(
+        activation_fn='gelu',
+        angles=[
+            False,
+        ],
+        d_model=256,
+        datasets=[
+            'scannet',
+        ],
+        datasets_classes=[
+            [
+                'cabinet',
+                'bed',
+                'chair',
+                'sofa',
+                'table',
+                'door',
+                'window',
+                'bookshelf',
+                'picture',
+                'counter',
+                'desk',
+                'curtain',
+                'refrigerator',
+                'showercurtrain',
+                'toilet',
+                'sink',
+                'bathtub',
+                'otherfurniture',
+            ],
+        ],
+        dropout=0.0,
+        hidden_dim=1024,
+        in_channels=32,
+        num_heads=8,
+        num_layers=6,
+        type='UniDet3DEncoder'),
+    fast_nms=[
+        True,
+    ],
+    in_channels=6,
+    min_spatial_shape=128,
+    num_channels=32,
+    query_thr=3000,
+    target_by_distance=[
+        False,
+    ],
+    test_cfg=dict(
+        iou_thr=[
+            0.5,
+        ],
+        low_sp_thr=0.18,
+        score_thr=0,
+        topk_insts=1000,
+        up_sp_thr=0.81),
+    train_cfg=dict(topk=6),
+    type='UniDet3D',
+    use_superpoints=[
+        True,
+    ],
+    voxel_size=0.02)
+num_channels = 32
+optim_wrapper = dict(
+    clip_grad=dict(max_norm=10, norm_type=2),
+    optimizer=dict(lr=0.0002, type='AdamW', weight_decay=0.05),
+    type='OptimWrapper')
+param_scheduler = dict(begin=0, end=1024, power=0.9, type='PolyLR')
+resume = False
+test_area = 5
+test_cfg = dict(type='TestLoop')
+test_dataloader = dict(
+    batch_size=1,
+    dataset=dict(
+        datasets=[
+            dict(
+                ann_file='scannetpp_infos_val.pkl',
+                data_prefix=dict(
+                    pts='points',
+                    pts_instance_mask='instance_mask',
+                    pts_semantic_mask='semantic_mask',
+                    sp_pts_mask='super_points_spt'),
+                data_root='data/scannetpp/bins',
+                pipeline=[
+                    dict(
+                        coord_type='DEPTH',
+                        load_dim=6,
+                        shift_height=False,
+                        type='LoadPointsFromFile',
+                        use_color=True,
+                        use_dim=[
+                            0,
+                            1,
+                            2,
+                            3,
+                            4,
+                            5,
+                        ]),
+                    dict(
+                        type='LoadAnnotations3D_',
+                        with_bbox_3d=False,
+                        with_label_3d=False,
+                        with_sp_mask_3d=True),
+                    dict(
+                        flip=False,
+                        img_scale=(
+                            1333,
+                            800,
+                        ),
+                        pts_scale_ratio=1,
+                        transforms=[
+                            dict(num_points=200000, type='PointSample_'),
+                            dict(
+                                color_mean=[
+                                    127.5,
+                                    127.5,
+                                    127.5,
+                                ],
+                                type='NormalizePointsColor_'),
+                        ],
+                        type='MultiScaleFlipAug3D'),
+                    dict(
+                        keys=[
+                            'points',
+                            'sp_pts_mask',
+                        ],
+                        type='Pack3DDetInputs_'),
+                ],
+                test_mode=True,
+                type='Scannetpp_'),
+        ],
+        type='ConcatDataset_'),
+    drop_last=False,
+    num_workers=1,
+    persistent_workers=True,
+    sampler=dict(shuffle=False, type='DefaultSampler'))
+test_evaluator = dict(
+    datasets=[
+        'scannet',
+        's3dis',
+        'multiscan',
+        '3rscan',
+        'arkitscenes',
+        'scannetpp',
+    ],
+    datasets_classes=[
+        [
+            'cabinet',
+            'bed',
+            'chair',
+            'sofa',
+            'table',
+            'door',
+            'window',
+            'bookshelf',
+            'picture',
+            'counter',
+            'desk',
+            'curtain',
+            'refrigerator',
+            'showercurtrain',
+            'toilet',
+            'sink',
+            'bathtub',
+            'otherfurniture',
+        ],
+        [
+            'table',
+            'chair',
+            'sofa',
+            'bookcase',
+            'board',
+        ],
+        [
+            'door',
+            'table',
+            'chair',
+            'cabinet',
+            'window',
+            'sofa',
+            'microwave',
+            'pillow',
+            'tv_monitor',
+            'curtain',
+            'trash_can',
+            'suitcase',
+            'sink',
+            'backpack',
+            'bed',
+            'refrigerator',
+            'toilet',
+        ],
+        [
+            'cabinet',
+            'bed',
+            'chair',
+            'sofa',
+            'table',
+            'door',
+            'window',
+            'bookshelf',
+            'picture',
+            'counter',
+            'desk',
+            'curtain',
+            'refrigerator',
+            'showercurtrain',
+            'toilet',
+            'sink',
+            'bathtub',
+            'otherfurniture',
+        ],
+        [
+            'cabinet',
+            'refrigerator',
+            'shelf',
+            'stove',
+            'bed',
+            'sink',
+            'washer',
+            'toilet',
+            'bathtub',
+            'oven',
+            'dishwasher',
+            'fireplace',
+            'stool',
+            'chair',
+            'table',
+            'tv_monitor',
+            'sofa',
+        ],
+        [
+            'table',
+            'door',
+            'ceiling lamp',
+            'cabinet',
+            'blinds',
+            'curtain',
+            'chair',
+            'storage cabinet',
+            'office chair',
+            'bookshelf',
+            'whiteboard',
+            'window',
+            'box',
+            'monitor',
+            'shelf',
+            'heater',
+            'kitchen cabinet',
+            'sofa',
+            'bed',
+            'trash can',
+            'book',
+            'plant',
+            'blanket',
+            'tv',
+            'computer tower',
+            'refrigerator',
+            'jacket',
+            'sink',
+            'bag',
+            'picture',
+            'pillow',
+            'towel',
+            'suitcase',
+            'backpack',
+            'crate',
+            'keyboard',
+            'rack',
+            'toilet',
+            'printer',
+            'poster',
+            'painting',
+            'microwave',
+            'shoes',
+            'socket',
+            'bottle',
+            'bucket',
+            'cushion',
+            'basket',
+            'shoe rack',
+            'telephone',
+            'file folder',
+            'laptop',
+            'plant pot',
+            'exhaust fan',
+            'cup',
+            'coat hanger',
+            'light switch',
+            'speaker',
+            'table lamp',
+            'kettle',
+            'smoke detector',
+            'container',
+            'power strip',
+            'slippers',
+            'paper bag',
+            'mouse',
+            'cutting board',
+            'toilet paper',
+            'paper towel',
+            'pot',
+            'clock',
+            'pan',
+            'tap',
+            'jar',
+            'soap dispenser',
+            'binder',
+            'bowl',
+            'tissue box',
+            'whiteboard eraser',
+            'toilet brush',
+            'spray bottle',
+            'headphones',
+            'stapler',
+            'marker',
+        ],
+    ],
+    type='IndoorMetric_')
+test_pipeline_3rscan = [
+    dict(
+        coord_type='DEPTH',
+        load_dim=6,
+        shift_height=False,
+        type='LoadPointsFromFile',
+        use_color=True,
+        use_dim=[
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+        ]),
+    dict(
+        type='LoadAnnotations3D_',
+        with_bbox_3d=False,
+        with_label_3d=False,
+        with_sp_mask_3d=True),
+    dict(
+        flip=False,
+        img_scale=(
+            1333,
+            800,
+        ),
+        pts_scale_ratio=1,
+        transforms=[
+            dict(num_points=100000, type='PointSample_'),
+            dict(
+                color_mean=[
+                    127.5,
+                    127.5,
+                    127.5,
+                ],
+                type='NormalizePointsColor_'),
+        ],
+        type='MultiScaleFlipAug3D'),
+    dict(keys=[
+        'points',
+        'sp_pts_mask',
+    ], type='Pack3DDetInputs_'),
+]
+test_pipeline_arkitscenes = [
+    dict(
+        coord_type='DEPTH',
+        load_dim=6,
+        shift_height=False,
+        type='LoadPointsFromFile',
+        use_color=True,
+        use_dim=[
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+        ]),
+    dict(
+        type='LoadAnnotations3D_',
+        with_bbox_3d=False,
+        with_label_3d=False,
+        with_sp_mask_3d=True),
+    dict(
+        flip=False,
+        img_scale=(
+            1333,
+            800,
+        ),
+        pts_scale_ratio=1,
+        transforms=[
+            dict(num_points=100000, type='PointSample_'),
+            dict(
+                color_mean=[
+                    0,
+                    0,
+                    0,
+                ],
+                color_std=[
+                    255,
+                    255,
+                    255,
+                ],
+                type='DenormalizePointsColor'),
+            dict(
+                color_mean=[
+                    127.5,
+                    127.5,
+                    127.5,
+                ],
+                type='NormalizePointsColor_'),
+        ],
+        type='MultiScaleFlipAug3D'),
+    dict(keys=[
+        'points',
+        'sp_pts_mask',
+    ], type='Pack3DDetInputs_'),
+]
+test_pipeline_multiscan = [
+    dict(
+        coord_type='DEPTH',
+        load_dim=6,
+        shift_height=False,
+        type='LoadPointsFromFile',
+        use_color=True,
+        use_dim=[
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+        ]),
+    dict(
+        type='LoadAnnotations3D_',
+        with_bbox_3d=False,
+        with_label_3d=False,
+        with_sp_mask_3d=True),
+    dict(
+        flip=False,
+        img_scale=(
+            1333,
+            800,
+        ),
+        pts_scale_ratio=1,
+        transforms=[
+            dict(num_points=100000, type='PointSample_'),
+            dict(
+                color_mean=[
+                    127.5,
+                    127.5,
+                    127.5,
+                ],
+                type='NormalizePointsColor_'),
+        ],
+        type='MultiScaleFlipAug3D'),
+    dict(keys=[
+        'points',
+        'sp_pts_mask',
+    ], type='Pack3DDetInputs_'),
+]
+test_pipeline_s3dis = [
+    dict(
+        coord_type='DEPTH',
+        load_dim=6,
+        shift_height=False,
+        type='LoadPointsFromFile',
+        use_color=True,
+        use_dim=[
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+        ]),
+    dict(
+        type='LoadAnnotations3D_',
+        with_bbox_3d=False,
+        with_label_3d=False,
+        with_mask_3d=True,
+        with_seg_3d=True,
+        with_sp_mask_3d=True),
+    dict(
+        flip=False,
+        img_scale=(
+            1333,
+            800,
+        ),
+        pts_scale_ratio=1,
+        transforms=[
+            dict(num_points=180000, type='PointSample_'),
+            dict(
+                color_mean=[
+                    127.5,
+                    127.5,
+                    127.5,
+                ],
+                type='NormalizePointsColor_'),
+        ],
+        type='MultiScaleFlipAug3D'),
+    dict(keys=[
+        'points',
+        'sp_pts_mask',
+    ], type='Pack3DDetInputs_'),
+]
+test_pipeline_scannet = [
+    dict(
+        coord_type='DEPTH',
+        load_dim=6,
+        shift_height=False,
+        type='LoadPointsFromFile',
+        use_color=True,
+        use_dim=[
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+        ]),
+    dict(
+        type='LoadAnnotations3D_',
+        with_bbox_3d=False,
+        with_label_3d=False,
+        with_mask_3d=True,
+        with_seg_3d=True,
+        with_sp_mask_3d=True),
+    dict(rotation_axis=2, type='GlobalAlignment'),
+    dict(
+        flip=False,
+        img_scale=(
+            1333,
+            800,
+        ),
+        pts_scale_ratio=1,
+        transforms=[
+            dict(
+                color_mean=[
+                    127.5,
+                    127.5,
+                    127.5,
+                ],
+                type='NormalizePointsColor_'),
+        ],
+        type='MultiScaleFlipAug3D'),
+    dict(keys=[
+        'points',
+        'sp_pts_mask',
+    ], type='Pack3DDetInputs_'),
+]
+test_pipeline_scannetpp = [
+    dict(
+        coord_type='DEPTH',
+        load_dim=6,
+        shift_height=False,
+        type='LoadPointsFromFile',
+        use_color=True,
+        use_dim=[
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+        ]),
+    dict(
+        type='LoadAnnotations3D_',
+        with_bbox_3d=False,
+        with_label_3d=False,
+        with_sp_mask_3d=True),
+    dict(
+        flip=False,
+        img_scale=(
+            1333,
+            800,
+        ),
+        pts_scale_ratio=1,
+        transforms=[
+            dict(num_points=200000, type='PointSample_'),
+            dict(
+                color_mean=[
+                    127.5,
+                    127.5,
+                    127.5,
+                ],
+                type='NormalizePointsColor_'),
+        ],
+        type='MultiScaleFlipAug3D'),
+    dict(keys=[
+        'points',
+        'sp_pts_mask',
+    ], type='Pack3DDetInputs_'),
+]
+train_area = [
+    1,
+    2,
+    3,
+    4,
+    6,
+]
+train_cfg = dict(
+    dynamic_intervals=[
+        (
+            1,
+            16,
+        ),
+        (
+            1008,
+            1,
+        ),
+    ],
+    max_epochs=1024,
+    type='EpochBasedTrainLoop')
+train_dataloader = dict(
+    batch_size=8,
+    dataset=dict(
+        datasets=[
+            dict(
+                ann_file='scannetpp_infos_train.pkl',
+                data_prefix=dict(
+                    pts='points',
+                    pts_instance_mask='instance_mask',
+                    pts_semantic_mask='semantic_mask',
+                    sp_pts_mask='super_points_spt'),
+                data_root='data/scannetpp/bins',
+                partition=0.33,
+                pipeline=[
+                    dict(
+                        coord_type='DEPTH',
+                        load_dim=6,
+                        shift_height=False,
+                        type='LoadPointsFromFile',
+                        use_color=True,
+                        use_dim=[
+                            0,
+                            1,
+                            2,
+                            3,
+                            4,
+                            5,
+                        ]),
+                    dict(
+                        type='LoadAnnotations3D_',
+                        with_bbox_3d=True,
+                        with_label_3d=True,
+                        with_sp_mask_3d=True),
+                    dict(num_points=200000, type='PointSample_'),
+                    dict(
+                        flip_ratio_bev_horizontal=0.5,
+                        flip_ratio_bev_vertical=0.5,
+                        sync_2d=False,
+                        type='RandomFlip3D'),
+                    dict(
+                        rot_range=[
+                            0,
+                            0,
+                        ],
+                        scale_ratio_range=[
+                            0.9,
+                            1.1,
+                        ],
+                        shift_height=False,
+                        translation_std=[
+                            0.1,
+                            0.1,
+                            0.1,
+                        ],
+                        type='GlobalRotScaleTrans'),
+                    dict(
+                        color_mean=[
+                            127.5,
+                            127.5,
+                            127.5,
+                        ],
+                        type='NormalizePointsColor_'),
+                    dict(
+                        gran=[
+                            6,
+                            20,
+                        ],
+                        mag=[
+                            40,
+                            160,
+                        ],
+                        p=-1,
+                        type='ElasticTransfrom',
+                        voxel_size=0.02),
+                    dict(
+                        keys=[
+                            'points',
+                            'elastic_coords',
+                            'gt_bboxes_3d',
+                            'gt_labels_3d',
+                            'sp_pts_mask',
+                        ],
+                        type='Pack3DDetInputs_'),
+                ],
+                test_mode=False,
+                type='Scannetpp_'),
+            dict(
+                ann_file='arkitscenes_offline_infos_train.pkl',
+                data_prefix=dict(
+                    pts='offline_prepared_data', sp_pts_mask='super_points'),
+                data_root='data/arkitscenes',
+                partition=0.08,
+                pipeline=[
+                    dict(
+                        coord_type='DEPTH',
+                        load_dim=6,
+                        shift_height=False,
+                        type='LoadPointsFromFile',
+                        use_color=True,
+                        use_dim=[
+                            0,
+                            1,
+                            2,
+                            3,
+                            4,
+                            5,
+                        ]),
+                    dict(
+                        type='LoadAnnotations3D_',
+                        with_bbox_3d=True,
+                        with_label_3d=True,
+                        with_sp_mask_3d=True),
+                    dict(num_points=100000, type='PointSample_'),
+                    dict(
+                        color_mean=[
+                            0,
+                            0,
+                            0,
+                        ],
+                        color_std=[
+                            255,
+                            255,
+                            255,
+                        ],
+                        type='DenormalizePointsColor'),
+                    dict(
+                        color_mean=[
+                            127.5,
+                            127.5,
+                            127.5,
+                        ],
+                        type='NormalizePointsColor_'),
+                    dict(
+                        flip_ratio_bev_horizontal=0.5,
+                        flip_ratio_bev_vertical=0.5,
+                        sync_2d=False,
+                        type='RandomFlip3D'),
+                    dict(
+                        rot_range=[
+                            -0.5,
+                            0.5,
+                        ],
+                        scale_ratio_range=[
+                            0.9,
+                            1.1,
+                        ],
+                        shift_height=False,
+                        translation_std=[
+                            0.1,
+                            0.1,
+                            0.1,
+                        ],
+                        type='GlobalRotScaleTrans'),
+                    dict(
+                        gran=[
+                            6,
+                            20,
+                        ],
+                        mag=[
+                            40,
+                            160,
+                        ],
+                        p=-1,
+                        type='ElasticTransfrom',
+                        voxel_size=0.02),
+                    dict(
+                        keys=[
+                            'points',
+                            'elastic_coords',
+                            'gt_bboxes_3d',
+                            'gt_labels_3d',
+                            'sp_pts_mask',
+                        ],
+                        type='Pack3DDetInputs_'),
+                ],
+                test_mode=False,
+                type='ARKitScenesOfflineDataset'),
+        ],
+        type='ConcatDataset_'),
+    num_workers=8,
+    persistent_workers=True,
+    sampler=dict(shuffle=True, type='DefaultSampler'))
+train_pipeline_3rscan = [
+    dict(
+        coord_type='DEPTH',
+        load_dim=6,
+        shift_height=False,
+        type='LoadPointsFromFile',
+        use_color=True,
+        use_dim=[
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+        ]),
+    dict(
+        type='LoadAnnotations3D_',
+        with_bbox_3d=True,
+        with_label_3d=True,
+        with_sp_mask_3d=True),
+    dict(num_points=100000, type='PointSample_'),
+    dict(
+        flip_ratio_bev_horizontal=0.5,
+        flip_ratio_bev_vertical=0.5,
+        sync_2d=False,
+        type='RandomFlip3D'),
+    dict(
+        rot_range=[
+            0,
+            0,
+        ],
+        scale_ratio_range=[
+            0.9,
+            1.1,
+        ],
+        shift_height=False,
+        translation_std=[
+            0.1,
+            0.1,
+            0.1,
+        ],
+        type='GlobalRotScaleTrans'),
+    dict(color_mean=[
+        127.5,
+        127.5,
+        127.5,
+    ], type='NormalizePointsColor_'),
+    dict(
+        gran=[
+            6,
+            20,
+        ],
+        mag=[
+            40,
+            160,
+        ],
+        p=-1,
+        type='ElasticTransfrom',
+        voxel_size=0.02),
+    dict(
+        keys=[
+            'points',
+            'elastic_coords',
+            'gt_bboxes_3d',
+            'gt_labels_3d',
+            'sp_pts_mask',
+        ],
+        type='Pack3DDetInputs_'),
+]
+train_pipeline_arkitscenes = [
+    dict(
+        coord_type='DEPTH',
+        load_dim=6,
+        shift_height=False,
+        type='LoadPointsFromFile',
+        use_color=True,
+        use_dim=[
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+        ]),
+    dict(
+        type='LoadAnnotations3D_',
+        with_bbox_3d=True,
+        with_label_3d=True,
+        with_sp_mask_3d=True),
+    dict(num_points=100000, type='PointSample_'),
+    dict(
+        color_mean=[
+            0,
+            0,
+            0,
+        ],
+        color_std=[
+            255,
+            255,
+            255,
+        ],
+        type='DenormalizePointsColor'),
+    dict(color_mean=[
+        127.5,
+        127.5,
+        127.5,
+    ], type='NormalizePointsColor_'),
+    dict(
+        flip_ratio_bev_horizontal=0.5,
+        flip_ratio_bev_vertical=0.5,
+        sync_2d=False,
+        type='RandomFlip3D'),
+    dict(
+        rot_range=[
+            -0.5,
+            0.5,
+        ],
+        scale_ratio_range=[
+            0.9,
+            1.1,
+        ],
+        shift_height=False,
+        translation_std=[
+            0.1,
+            0.1,
+            0.1,
+        ],
+        type='GlobalRotScaleTrans'),
+    dict(
+        gran=[
+            6,
+            20,
+        ],
+        mag=[
+            40,
+            160,
+        ],
+        p=-1,
+        type='ElasticTransfrom',
+        voxel_size=0.02),
+    dict(
+        keys=[
+            'points',
+            'elastic_coords',
+            'gt_bboxes_3d',
+            'gt_labels_3d',
+            'sp_pts_mask',
+        ],
+        type='Pack3DDetInputs_'),
+]
+train_pipeline_multiscan = [
+    dict(
+        coord_type='DEPTH',
+        load_dim=6,
+        shift_height=False,
+        type='LoadPointsFromFile',
+        use_color=True,
+        use_dim=[
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+        ]),
+    dict(
+        type='LoadAnnotations3D_',
+        with_bbox_3d=True,
+        with_label_3d=True,
+        with_sp_mask_3d=True),
+    dict(num_points=100000, type='PointSample_'),
+    dict(
+        flip_ratio_bev_horizontal=0.5,
+        flip_ratio_bev_vertical=0.5,
+        sync_2d=False,
+        type='RandomFlip3D'),
+    dict(
+        rot_range=[
+            0,
+            0,
+        ],
+        scale_ratio_range=[
+            0.9,
+            1.1,
+        ],
+        shift_height=False,
+        translation_std=[
+            0.1,
+            0.1,
+            0.1,
+        ],
+        type='GlobalRotScaleTrans'),
+    dict(color_mean=[
+        127.5,
+        127.5,
+        127.5,
+    ], type='NormalizePointsColor_'),
+    dict(
+        gran=[
+            6,
+            20,
+        ],
+        mag=[
+            40,
+            160,
+        ],
+        p=-1,
+        type='ElasticTransfrom',
+        voxel_size=0.02),
+    dict(
+        keys=[
+            'points',
+            'elastic_coords',
+            'gt_bboxes_3d',
+            'gt_labels_3d',
+            'sp_pts_mask',
+        ],
+        type='Pack3DDetInputs_'),
+]
+train_pipeline_s3dis = [
+    dict(
+        coord_type='DEPTH',
+        load_dim=6,
+        shift_height=False,
+        type='LoadPointsFromFile',
+        use_color=True,
+        use_dim=[
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+        ]),
+    dict(
+        type='LoadAnnotations3D_',
+        with_bbox_3d=False,
+        with_label_3d=False,
+        with_mask_3d=True,
+        with_seg_3d=True,
+        with_sp_mask_3d=True),
+    dict(num_points=180000, type='PointSample_'),
+    dict(
+        flip_ratio_bev_horizontal=0.5,
+        flip_ratio_bev_vertical=0.5,
+        sync_2d=False,
+        type='RandomFlip3D'),
+    dict(
+        rot_range=[
+            0.0,
+            0.0,
+        ],
+        scale_ratio_range=[
+            0.9,
+            1.1,
+        ],
+        shift_height=False,
+        translation_std=[
+            0.1,
+            0.1,
+            0.1,
+        ],
+        type='GlobalRotScaleTrans'),
+    dict(classes=[
+        7,
+        8,
+        9,
+        10,
+        11,
+    ], type='PointDetClassMappingS3DIS'),
+    dict(color_mean=[
+        127.5,
+        127.5,
+        127.5,
+    ], type='NormalizePointsColor_'),
+    dict(
+        gran=[
+            6,
+            20,
+        ],
+        mag=[
+            40,
+            160,
+        ],
+        p=-1,
+        type='ElasticTransfrom',
+        voxel_size=0.02),
+    dict(
+        keys=[
+            'points',
+            'elastic_coords',
+            'gt_labels_3d',
+            'sp_pts_mask',
+            'gt_sp_masks',
+            'pts_semantic_mask',
+            'pts_instance_mask',
+        ],
+        type='Pack3DDetInputs_'),
+]
+train_pipeline_scannet = [
+    dict(
+        coord_type='DEPTH',
+        load_dim=6,
+        shift_height=False,
+        type='LoadPointsFromFile',
+        use_color=True,
+        use_dim=[
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+        ]),
+    dict(
+        type='LoadAnnotations3D_',
+        with_bbox_3d=False,
+        with_label_3d=False,
+        with_mask_3d=True,
+        with_seg_3d=True,
+        with_sp_mask_3d=True),
+    dict(rotation_axis=2, type='GlobalAlignment'),
+    dict(type='PointSegClassMapping'),
+    dict(
+        flip_ratio_bev_horizontal=0.5,
+        flip_ratio_bev_vertical=0.5,
+        sync_2d=False,
+        type='RandomFlip3D'),
+    dict(
+        rot_range=[
+            -3.14,
+            3.14,
+        ],
+        scale_ratio_range=[
+            0.8,
+            1.2,
+        ],
+        shift_height=False,
+        translation_std=[
+            0.1,
+            0.1,
+            0.1,
+        ],
+        type='GlobalRotScaleTrans'),
+    dict(color_mean=[
+        127.5,
+        127.5,
+        127.5,
+    ], type='NormalizePointsColor_'),
+    dict(
+        num_classes=20,
+        stuff_classes=[
+            0,
+            1,
+        ],
+        type='PointDetClassMappingScanNet'),
+    dict(
+        gran=[
+            6,
+            20,
+        ],
+        mag=[
+            40,
+            160,
+        ],
+        p=0.5,
+        type='ElasticTransfrom',
+        voxel_size=0.02),
+    dict(
+        keys=[
+            'points',
+            'gt_labels_3d',
+            'pts_semantic_mask',
+            'pts_instance_mask',
+            'sp_pts_mask',
+            'gt_sp_masks',
+            'elastic_coords',
+        ],
+        type='Pack3DDetInputs_'),
+]
+train_pipeline_scannetpp = [
+    dict(
+        coord_type='DEPTH',
+        load_dim=6,
+        shift_height=False,
+        type='LoadPointsFromFile',
+        use_color=True,
+        use_dim=[
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+        ]),
+    dict(
+        type='LoadAnnotations3D_',
+        with_bbox_3d=True,
+        with_label_3d=True,
+        with_sp_mask_3d=True),
+    dict(num_points=200000, type='PointSample_'),
+    dict(
+        flip_ratio_bev_horizontal=0.5,
+        flip_ratio_bev_vertical=0.5,
+        sync_2d=False,
+        type='RandomFlip3D'),
+    dict(
+        rot_range=[
+            0,
+            0,
+        ],
+        scale_ratio_range=[
+            0.9,
+            1.1,
+        ],
+        shift_height=False,
+        translation_std=[
+            0.1,
+            0.1,
+            0.1,
+        ],
+        type='GlobalRotScaleTrans'),
+    dict(color_mean=[
+        127.5,
+        127.5,
+        127.5,
+    ], type='NormalizePointsColor_'),
+    dict(
+        gran=[
+            6,
+            20,
+        ],
+        mag=[
+            40,
+            160,
+        ],
+        p=-1,
+        type='ElasticTransfrom',
+        voxel_size=0.02),
+    dict(
+        keys=[
+            'points',
+            'elastic_coords',
+            'gt_bboxes_3d',
+            'gt_labels_3d',
+            'sp_pts_mask',
+        ],
+        type='Pack3DDetInputs_'),
+]
+val_cfg = dict(type='ValLoop')
+val_dataloader = dict(
+    batch_size=1,
+    dataset=dict(
+        datasets=[
+            dict(
+                ann_file='scannetpp_infos_val.pkl',
+                data_prefix=dict(
+                    pts='points',
+                    pts_instance_mask='instance_mask',
+                    pts_semantic_mask='semantic_mask',
+                    sp_pts_mask='super_points_spt'),
+                data_root='data/scannetpp/bins',
+                pipeline=[
+                    dict(
+                        coord_type='DEPTH',
+                        load_dim=6,
+                        shift_height=False,
+                        type='LoadPointsFromFile',
+                        use_color=True,
+                        use_dim=[
+                            0,
+                            1,
+                            2,
+                            3,
+                            4,
+                            5,
+                        ]),
+                    dict(
+                        type='LoadAnnotations3D_',
+                        with_bbox_3d=False,
+                        with_label_3d=False,
+                        with_sp_mask_3d=True),
+                    dict(
+                        flip=False,
+                        img_scale=(
+                            1333,
+                            800,
+                        ),
+                        pts_scale_ratio=1,
+                        transforms=[
+                            dict(num_points=200000, type='PointSample_'),
+                            dict(
+                                color_mean=[
+                                    127.5,
+                                    127.5,
+                                    127.5,
+                                ],
+                                type='NormalizePointsColor_'),
+                        ],
+                        type='MultiScaleFlipAug3D'),
+                    dict(
+                        keys=[
+                            'points',
+                            'sp_pts_mask',
+                        ],
+                        type='Pack3DDetInputs_'),
+                ],
+                test_mode=True,
+                type='Scannetpp_'),
+        ],
+        type='ConcatDataset_'),
+    drop_last=False,
+    num_workers=1,
+    persistent_workers=True,
+    sampler=dict(shuffle=False, type='DefaultSampler'))
+val_evaluator = dict(
+    datasets=[
+        'scannetpp',
+    ],
+    datasets_classes=[
+        [
+            'cabinet',
+            'bed',
+            'chair',
+            'sofa',
+            'table',
+            'door',
+            'window',
+            'bookshelf',
+            'picture',
+            'counter',
+            'desk',
+            'curtain',
+            'refrigerator',
+            'showercurtrain',
+            'toilet',
+            'sink',
+            'bathtub',
+            'otherfurniture',
+        ],
+        [
+            'table',
+            'chair',
+            'sofa',
+            'bookcase',
+            'board',
+        ],
+        [
+            'door',
+            'table',
+            'chair',
+            'cabinet',
+            'window',
+            'sofa',
+            'microwave',
+            'pillow',
+            'tv_monitor',
+            'curtain',
+            'trash_can',
+            'suitcase',
+            'sink',
+            'backpack',
+            'bed',
+            'refrigerator',
+            'toilet',
+        ],
+        [
+            'cabinet',
+            'bed',
+            'chair',
+            'sofa',
+            'table',
+            'door',
+            'window',
+            'bookshelf',
+            'picture',
+            'counter',
+            'desk',
+            'curtain',
+            'refrigerator',
+            'showercurtrain',
+            'toilet',
+            'sink',
+            'bathtub',
+            'otherfurniture',
+        ],
+        [
+            'cabinet',
+            'refrigerator',
+            'shelf',
+            'stove',
+            'bed',
+            'sink',
+            'washer',
+            'toilet',
+            'bathtub',
+            'oven',
+            'dishwasher',
+            'fireplace',
+            'stool',
+            'chair',
+            'table',
+            'tv_monitor',
+            'sofa',
+        ],
+        [
+            'table',
+            'door',
+            'ceiling lamp',
+            'cabinet',
+            'blinds',
+            'curtain',
+            'chair',
+            'storage cabinet',
+            'office chair',
+            'bookshelf',
+            'whiteboard',
+            'window',
+            'box',
+            'monitor',
+            'shelf',
+            'heater',
+            'kitchen cabinet',
+            'sofa',
+            'bed',
+            'trash can',
+            'book',
+            'plant',
+            'blanket',
+            'tv',
+            'computer tower',
+            'refrigerator',
+            'jacket',
+            'sink',
+            'bag',
+            'picture',
+            'pillow',
+            'towel',
+            'suitcase',
+            'backpack',
+            'crate',
+            'keyboard',
+            'rack',
+            'toilet',
+            'printer',
+            'poster',
+            'painting',
+            'microwave',
+            'shoes',
+            'socket',
+            'bottle',
+            'bucket',
+            'cushion',
+            'basket',
+            'shoe rack',
+            'telephone',
+            'file folder',
+            'laptop',
+            'plant pot',
+            'exhaust fan',
+            'cup',
+            'coat hanger',
+            'light switch',
+            'speaker',
+            'table lamp',
+            'kettle',
+            'smoke detector',
+            'container',
+            'power strip',
+            'slippers',
+            'paper bag',
+            'mouse',
+            'cutting board',
+            'toilet paper',
+            'paper towel',
+            'pot',
+            'clock',
+            'pan',
+            'tap',
+            'jar',
+            'soap dispenser',
+            'binder',
+            'bowl',
+            'tissue box',
+            'whiteboard eraser',
+            'toilet brush',
+            'spray bottle',
+            'headphones',
+            'stapler',
+            'marker',
+        ],
+    ],
+    type='IndoorMetric_')
+voxel_size = 0.02
+work_dir = './work_dirs/unidet3d_train_spp_ar'
+
+06/26 01:16:59 - mmengine - INFO - Distributed training is not used, all SyncBatchNorm (SyncBN) layers in the model will be automatically reverted to BatchNormXd layers if they are used.
+06/26 01:16:59 - mmengine - INFO - Hooks will be executed in the following order:
+before_run:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+before_train:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_train_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) DistSamplerSeedHook                
+(NORMAL      ) EmptyCacheHook                     
+ -------------------- 
+before_train_iter:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_train_iter:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) EmptyCacheHook                     
+(BELOW_NORMAL) LoggerHook                         
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+after_train_epoch:
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) EmptyCacheHook                     
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_val:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+before_val_epoch:
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) EmptyCacheHook                     
+ -------------------- 
+before_val_iter:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_val_iter:
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) Det3DVisualizationHook             
+(NORMAL      ) EmptyCacheHook                     
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_val_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) EmptyCacheHook                     
+(BELOW_NORMAL) LoggerHook                         
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+after_val:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+after_train:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_test:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+before_test_epoch:
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) EmptyCacheHook                     
+ -------------------- 
+before_test_iter:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_test_iter:
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) Det3DVisualizationHook             
+(NORMAL      ) EmptyCacheHook                     
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_test_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) EmptyCacheHook                     
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_test:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+after_run:
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+06/26 01:17:00 - mmengine - INFO - ------------------------------
+06/26 01:17:00 - mmengine - INFO - The length of training dataset: 75
+06/26 01:17:00 - mmengine - INFO - The number of instances per category in the dataset:
++-------------------+--------+
+| category          | number |
++-------------------+--------+
+| table             | 569    |
+| door              | 404    |
+| ceiling lamp      | 732    |
+| cabinet           | 417    |
+| blinds            | 155    |
+| curtain           | 89     |
+| chair             | 695    |
+| storage cabinet   | 114    |
+| office chair      | 402    |
+| bookshelf         | 107    |
+| whiteboard        | 180    |
+| window            | 494    |
+| box               | 1169   |
+| monitor           | 471    |
+| shelf             | 160    |
+| heater            | 260    |
+| kitchen cabinet   | 105    |
+| sofa              | 47     |
+| bed               | 45     |
+| trash can         | 231    |
+| book              | 869    |
+| plant             | 147    |
+| blanket           | 55     |
+| tv                | 35     |
+| computer tower    | 175    |
+| refrigerator      | 23     |
+| jacket            | 83     |
+| sink              | 86     |
+| bag               | 171    |
+| picture           | 103    |
+| pillow            | 129    |
+| towel             | 130    |
+| suitcase          | 54     |
+| backpack          | 78     |
+| crate             | 71     |
+| keyboard          | 289    |
+| rack              | 17     |
+| toilet            | 32     |
+| printer           | 22     |
+| poster            | 102    |
+| painting          | 63     |
+| microwave         | 29     |
+| shoes             | 142    |
+| socket            | 810    |
+| bottle            | 454    |
+| bucket            | 55     |
+| cushion           | 43     |
+| basket            | 68     |
+| shoe rack         | 12     |
+| telephone         | 108    |
+| file folder       | 88     |
+| laptop            | 51     |
+| plant pot         | 69     |
+| exhaust fan       | 40     |
+| cup               | 209    |
+| coat hanger       | 13     |
+| light switch      | 316    |
+| speaker           | 45     |
+| table lamp        | 42     |
+| kettle            | 35     |
+| smoke detector    | 99     |
+| container         | 31     |
+| power strip       | 66     |
+| slippers          | 29     |
+| paper bag         | 15     |
+| mouse             | 238    |
+| cutting board     | 34     |
+| toilet paper      | 65     |
+| paper towel       | 29     |
+| pot               | 24     |
+| clock             | 17     |
+| pan               | 17     |
+| tap               | 33     |
+| jar               | 46     |
+| soap dispenser    | 17     |
+| binder            | 14     |
+| bowl              | 26     |
+| tissue box        | 22     |
+| whiteboard eraser | 60     |
+| toilet brush      | 15     |
+| spray bottle      | 21     |
+| headphones        | 17     |
+| stapler           | 13     |
+| marker            | 15     |
++-------------------+--------+
+06/26 01:17:01 - mmengine - INFO - ------------------------------
+06/26 01:17:01 - mmengine - INFO - The length of training dataset: 359
+06/26 01:17:01 - mmengine - INFO - The number of instances per category in the dataset:
++--------------+--------+
+| category     | number |
++--------------+--------+
+| cabinet      | 17726  |
+| refrigerator | 847    |
+| shelf        | 2099   |
+| stove        | 815    |
+| bed          | 1368   |
+| sink         | 2549   |
+| washer       | 794    |
+| toilet       | 1040   |
+| bathtub      | 717    |
+| oven         | 1342   |
+| dishwasher   | 329    |
+| fireplace    | 613    |
+| stool        | 1665   |
+| chair        | 7225   |
+| table        | 6021   |
+| tv_monitor   | 1936   |
+| sofa         | 3557   |
++--------------+--------+
+06/26 01:17:01 - mmengine - INFO - ------------------------------
+06/26 01:17:01 - mmengine - INFO - The length of test dataset: 50
+06/26 01:17:01 - mmengine - INFO - The number of instances per category in the dataset:
++-------------------+--------+
+| category          | number |
++-------------------+--------+
+| table             | 136    |
+| door              | 79     |
+| ceiling lamp      | 155    |
+| cabinet           | 68     |
+| blinds            | 23     |
+| curtain           | 12     |
+| chair             | 244    |
+| storage cabinet   | 25     |
+| office chair      | 48     |
+| bookshelf         | 11     |
+| whiteboard        | 35     |
+| window            | 92     |
+| box               | 180    |
+| monitor           | 70     |
+| shelf             | 30     |
+| heater            | 38     |
+| kitchen cabinet   | 25     |
+| sofa              | 12     |
+| bed               | 8      |
+| trash can         | 65     |
+| book              | 283    |
+| plant             | 18     |
+| blanket           | 11     |
+| tv                | 6      |
+| computer tower    | 42     |
+| refrigerator      | 9      |
+| jacket            | 11     |
+| sink              | 22     |
+| bag               | 27     |
+| picture           | 39     |
+| pillow            | 19     |
+| towel             | 38     |
+| suitcase          | 7      |
+| backpack          | 13     |
+| crate             | 11     |
+| keyboard          | 39     |
+| rack              | 0      |
+| toilet            | 9      |
+| printer           | 9      |
+| poster            | 9      |
+| painting          | 1      |
+| microwave         | 8      |
+| shoes             | 41     |
+| socket            | 153    |
+| bottle            | 83     |
+| bucket            | 7      |
+| cushion           | 6      |
+| basket            | 7      |
+| shoe rack         | 2      |
+| telephone         | 17     |
+| file folder       | 0      |
+| laptop            | 8      |
+| plant pot         | 16     |
+| exhaust fan       | 15     |
+| cup               | 44     |
+| coat hanger       | 4      |
+| light switch      | 79     |
+| speaker           | 11     |
+| table lamp        | 2      |
+| kettle            | 6      |
+| smoke detector    | 25     |
+| container         | 3      |
+| power strip       | 10     |
+| slippers          | 3      |
+| paper bag         | 1      |
+| mouse             | 33     |
+| cutting board     | 4      |
+| toilet paper      | 17     |
+| paper towel       | 8      |
+| pot               | 1      |
+| clock             | 3      |
+| pan               | 4      |
+| tap               | 9      |
+| jar               | 15     |
+| soap dispenser    | 5      |
+| binder            | 3      |
+| bowl              | 3      |
+| tissue box        | 2      |
+| whiteboard eraser | 7      |
+| toilet brush      | 6      |
+| spray bottle      | 4      |
+| headphones        | 2      |
+| stapler           | 0      |
+| marker            | 3      |
++-------------------+--------+
+/opt/conda/lib/python3.10/site-packages/mmdet3d/evaluation/functional/kitti_utils/eval.py:10: NumbaDeprecationWarning: The 'nopython' keyword argument was not supplied to the 'numba.jit' decorator. The implicit default value for this argument is currently False, but it will be changed to True in Numba 0.59.0. See https://numba.readthedocs.io/en/stable/reference/deprecation.html#deprecation-of-object-mode-fall-back-behaviour-when-using-jit for details.
+  def get_thresholds(scores: np.ndarray, num_gt, num_sample_pts=41):
+06/26 01:17:01 - mmengine - WARNING - The prefix is not set in metric class IndoorMetric_.
+Loads checkpoint by local backend from path: work_dirs/tmp/oneformer3d_1xb4_scannet.pth
+The model and loaded state dict do not match exactly
+
+unexpected key in source state_dict: decoder.query_proj.0.weight, decoder.query_proj.0.bias, decoder.query_proj.2.weight, decoder.query_proj.2.bias, decoder.cross_attn_layers.0.attn.in_proj_weight, decoder.cross_attn_layers.0.attn.in_proj_bias, decoder.cross_attn_layers.0.attn.out_proj.weight, decoder.cross_attn_layers.0.attn.out_proj.bias, decoder.cross_attn_layers.0.norm.weight, decoder.cross_attn_layers.0.norm.bias, decoder.cross_attn_layers.1.attn.in_proj_weight, decoder.cross_attn_layers.1.attn.in_proj_bias, decoder.cross_attn_layers.1.attn.out_proj.weight, decoder.cross_attn_layers.1.attn.out_proj.bias, decoder.cross_attn_layers.1.norm.weight, decoder.cross_attn_layers.1.norm.bias, decoder.cross_attn_layers.2.attn.in_proj_weight, decoder.cross_attn_layers.2.attn.in_proj_bias, decoder.cross_attn_layers.2.attn.out_proj.weight, decoder.cross_attn_layers.2.attn.out_proj.bias, decoder.cross_attn_layers.2.norm.weight, decoder.cross_attn_layers.2.norm.bias, decoder.cross_attn_layers.3.attn.in_proj_weight, decoder.cross_attn_layers.3.attn.in_proj_bias, decoder.cross_attn_layers.3.attn.out_proj.weight, decoder.cross_attn_layers.3.attn.out_proj.bias, decoder.cross_attn_layers.3.norm.weight, decoder.cross_attn_layers.3.norm.bias, decoder.cross_attn_layers.4.attn.in_proj_weight, decoder.cross_attn_layers.4.attn.in_proj_bias, decoder.cross_attn_layers.4.attn.out_proj.weight, decoder.cross_attn_layers.4.attn.out_proj.bias, decoder.cross_attn_layers.4.norm.weight, decoder.cross_attn_layers.4.norm.bias, decoder.cross_attn_layers.5.attn.in_proj_weight, decoder.cross_attn_layers.5.attn.in_proj_bias, decoder.cross_attn_layers.5.attn.out_proj.weight, decoder.cross_attn_layers.5.attn.out_proj.bias, decoder.cross_attn_layers.5.norm.weight, decoder.cross_attn_layers.5.norm.bias, decoder.out_cls.0.weight, decoder.out_cls.0.bias, decoder.out_cls.2.weight, decoder.out_cls.2.bias, decoder.x_mask.0.weight, decoder.x_mask.0.bias, decoder.x_mask.2.weight, decoder.x_mask.2.bias, decoder.out_sem.weight, decoder.out_sem.bias, decoder.input_proj.1.weight, decoder.input_proj.1.bias
+
+missing keys in source state_dict: decoder.input_proj.2.weight, decoder.input_proj.2.bias, decoder.outs_cls.0.weight, decoder.outs_cls.0.bias, decoder.outs_cls.2.weight, decoder.outs_cls.2.bias, decoder.out_bboxes.linear.weight, decoder.out_bboxes.linear.bias
+
+06/26 01:17:01 - mmengine - INFO - Load checkpoint from work_dirs/tmp/oneformer3d_1xb4_scannet.pth
+06/26 01:17:01 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+06/26 01:17:01 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+06/26 01:17:01 - mmengine - INFO - Checkpoints will be saved to /root/anweshan/mantis/unidet3d/work_dirs/unidet3d_train_spp_ar.
+Traceback (most recent call last):
+  File "/root/anweshan/mantis/unidet3d/tools/train.py", line 135, in <module>
+    main()
+  File "/root/anweshan/mantis/unidet3d/tools/train.py", line 131, in main
+    runner.train()
+  File "/opt/conda/lib/python3.10/site-packages/mmengine/runner/runner.py", line 1777, in train
+    model = self.train_loop.run()  # type: ignore
+  File "/opt/conda/lib/python3.10/site-packages/mmengine/runner/loops.py", line 96, in run
+    self.run_epoch()
+  File "/opt/conda/lib/python3.10/site-packages/mmengine/runner/loops.py", line 111, in run_epoch
+    for idx, data_batch in enumerate(self.dataloader):
+  File "/opt/conda/lib/python3.10/site-packages/torch/utils/data/dataloader.py", line 630, in __next__
+    data = self._next_data()
+  File "/opt/conda/lib/python3.10/site-packages/torch/utils/data/dataloader.py", line 1345, in _next_data
+    return self._process_data(data)
+  File "/opt/conda/lib/python3.10/site-packages/torch/utils/data/dataloader.py", line 1371, in _process_data
+    data.reraise()
+  File "/opt/conda/lib/python3.10/site-packages/torch/_utils.py", line 694, in reraise
+    raise exception
+FileNotFoundError: Caught FileNotFoundError in DataLoader worker process 0.
+Original Traceback (most recent call last):
+  File "/opt/conda/lib/python3.10/site-packages/torch/utils/data/_utils/worker.py", line 308, in _worker_loop
+    data = fetcher.fetch(index)
+  File "/opt/conda/lib/python3.10/site-packages/torch/utils/data/_utils/fetch.py", line 51, in fetch
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "/opt/conda/lib/python3.10/site-packages/torch/utils/data/_utils/fetch.py", line 51, in <listcomp>
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "/opt/conda/lib/python3.10/site-packages/mmengine/dataset/dataset_wrapper.py", line 170, in __getitem__
+    return self.datasets[dataset_idx][sample_idx]
+  File "/root/anweshan/mantis/unidet3d/unidet3d/arkitscenes_dataset.py", line 129, in __getitem__
+    data = self.prepare_data(idx)
+  File "/opt/conda/lib/python3.10/site-packages/mmdet3d/datasets/det3d_dataset.py", line 385, in prepare_data
+    example = self.pipeline(input_dict)
+  File "/opt/conda/lib/python3.10/site-packages/mmengine/dataset/base_dataset.py", line 60, in __call__
+    data = t(data)
+  File "/workspace/mmcv/mmcv/transforms/base.py", line 12, in __call__
+    return self.transform(results)
+  File "/opt/conda/lib/python3.10/site-packages/mmdet3d/datasets/transforms/loading.py", line 646, in transform
+    points = self._load_points(pts_file_path)
+  File "/opt/conda/lib/python3.10/site-packages/mmdet3d/datasets/transforms/loading.py", line 622, in _load_points
+    pts_bytes = get(pts_filename, backend_args=self.backend_args)
+  File "/opt/conda/lib/python3.10/site-packages/mmengine/fileio/io.py", line 181, in get
+    return backend.get(filepath)
+  File "/opt/conda/lib/python3.10/site-packages/mmengine/fileio/backends/local_backend.py", line 33, in get
+    with open(filepath, 'rb') as f:
+FileNotFoundError: [Errno 2] No such file or directory: 'data/arkitscenes/offline_prepared_data/41126947_point.bin'
+

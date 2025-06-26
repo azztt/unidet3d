@@ -1,0 +1,12 @@
+Dockerfile
+LICENSE
+README.md
+configs
+data
+output.log
+run.sh
+run_logs
+tools
+unidet3d
+unprocessed_data
+work_dirs
