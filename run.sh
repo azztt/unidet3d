@@ -1,1 +1,1 @@
-python tools/train.py configs/unidet3d_train_spp_ar.py 2>&1 | tee run_logs/unidet3d_train_spp_ar.log
+python tools/train.py configs/unidet3d_1xb8_scannet_s3dis_multiscan_3rscan_scannetpp_arkitscenes.py 2>&1 | tee run_logs/unidet3d_train_spp_ar.log

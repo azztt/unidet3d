@@ -1,12 +1,12 @@
 /opt/conda/lib/python3.10/site-packages/MinkowskiEngine/__init__.py:36: UserWarning: The environment variable `OMP_NUM_THREADS` not set. MinkowskiEngine will automatically set `OMP_NUM_THREADS=16`. If you want to set `OMP_NUM_THREADS` manually, please export it on the command line before running a python script. e.g. `export OMP_NUM_THREADS=12; python your_program.py`. It is recommended to set it below 24.
   warnings.warn(
-06/26 01:16:57 - mmengine - INFO - 
+06/26 04:31:33 - mmengine - INFO - 
 ------------------------------------------------------------
 System environment:
     sys.platform: linux
     Python: 3.10.13 (main, Sep 11 2023, 13:44:35) [GCC 11.2.0]
     CUDA available: True
-    numpy_random_seed: 1458332434
+    numpy_random_seed: 1354058139
     GPU 0,1: NVIDIA RTX A5000
     CUDA_HOME: /usr/local/cuda
     NVCC: Cuda compilation tools, release 12.1, V12.1.105
@@ -35,13 +35,13 @@ Runtime environment:
     cudnn_benchmark: False
     mp_cfg: {'mp_start_method': 'fork', 'opencv_num_threads': 0}
     dist_cfg: {'backend': 'nccl'}
-    seed: 1458332434
+    seed: 1354058139
     Distributed launcher: none
     Distributed training: False
     GPU number: 1
 ------------------------------------------------------------
 
-06/26 01:16:58 - mmengine - INFO - Config:
+06/26 04:31:36 - mmengine - INFO - Config:
 classes_3rscan = [
     'cabinet',
     'bed',
@@ -313,6 +313,11 @@ model = dict(
         type='SpConvUNet'),
     bbox_by_mask=[
         True,
+        True,
+        False,
+        False,
+        False,
+        False,
     ],
     criterion=dict(
         bbox_loss_rotated=dict(
@@ -321,8 +326,18 @@ model = dict(
             mode='diou', reduction='none', type='UniDet3DAxisAlignedIoULoss'),
         datasets=[
             'scannet',
+            's3dis',
+            'multiscan',
+            '3rscan',
+            'scannetpp',
+            'arkitscenes',
         ],
         datasets_weights=[
+            1,
+            1,
+            1,
+            1,
+            1,
             1,
         ],
         iter_matcher=True,
@@ -349,6 +364,11 @@ model = dict(
         non_object_weight=0.1,
         topk=[
             6,
+            6,
+            3,
+            3,
+            3,
+            3,
         ],
         type='UniDet3DCriterion'),
     data_preprocessor=dict(type='Det3DDataPreprocessor_'),
@@ -356,10 +376,20 @@ model = dict(
         activation_fn='gelu',
         angles=[
             False,
+            False,
+            False,
+            False,
+            False,
+            True,
         ],
         d_model=256,
         datasets=[
             'scannet',
+            's3dis',
+            'multiscan',
+            '3rscan',
+            'scannetpp',
+            'arkitscenes',
         ],
         datasets_classes=[
             [
@@ -382,6 +412,157 @@ model = dict(
                 'bathtub',
                 'otherfurniture',
             ],
+            [
+                'table',
+                'chair',
+                'sofa',
+                'bookcase',
+                'board',
+            ],
+            [
+                'door',
+                'table',
+                'chair',
+                'cabinet',
+                'window',
+                'sofa',
+                'microwave',
+                'pillow',
+                'tv_monitor',
+                'curtain',
+                'trash_can',
+                'suitcase',
+                'sink',
+                'backpack',
+                'bed',
+                'refrigerator',
+                'toilet',
+            ],
+            [
+                'cabinet',
+                'bed',
+                'chair',
+                'sofa',
+                'table',
+                'door',
+                'window',
+                'bookshelf',
+                'picture',
+                'counter',
+                'desk',
+                'curtain',
+                'refrigerator',
+                'showercurtrain',
+                'toilet',
+                'sink',
+                'bathtub',
+                'otherfurniture',
+            ],
+            [
+                'table',
+                'door',
+                'ceiling lamp',
+                'cabinet',
+                'blinds',
+                'curtain',
+                'chair',
+                'storage cabinet',
+                'office chair',
+                'bookshelf',
+                'whiteboard',
+                'window',
+                'box',
+                'monitor',
+                'shelf',
+                'heater',
+                'kitchen cabinet',
+                'sofa',
+                'bed',
+                'trash can',
+                'book',
+                'plant',
+                'blanket',
+                'tv',
+                'computer tower',
+                'refrigerator',
+                'jacket',
+                'sink',
+                'bag',
+                'picture',
+                'pillow',
+                'towel',
+                'suitcase',
+                'backpack',
+                'crate',
+                'keyboard',
+                'rack',
+                'toilet',
+                'printer',
+                'poster',
+                'painting',
+                'microwave',
+                'shoes',
+                'socket',
+                'bottle',
+                'bucket',
+                'cushion',
+                'basket',
+                'shoe rack',
+                'telephone',
+                'file folder',
+                'laptop',
+                'plant pot',
+                'exhaust fan',
+                'cup',
+                'coat hanger',
+                'light switch',
+                'speaker',
+                'table lamp',
+                'kettle',
+                'smoke detector',
+                'container',
+                'power strip',
+                'slippers',
+                'paper bag',
+                'mouse',
+                'cutting board',
+                'toilet paper',
+                'paper towel',
+                'pot',
+                'clock',
+                'pan',
+                'tap',
+                'jar',
+                'soap dispenser',
+                'binder',
+                'bowl',
+                'tissue box',
+                'whiteboard eraser',
+                'toilet brush',
+                'spray bottle',
+                'headphones',
+                'stapler',
+                'marker',
+            ],
+            [
+                'cabinet',
+                'refrigerator',
+                'shelf',
+                'stove',
+                'bed',
+                'sink',
+                'washer',
+                'toilet',
+                'bathtub',
+                'oven',
+                'dishwasher',
+                'fireplace',
+                'stool',
+                'chair',
+                'table',
+                'tv_monitor',
+                'sofa',
+            ],
         ],
         dropout=0.0,
         hidden_dim=1024,
@@ -391,6 +572,11 @@ model = dict(
         type='UniDet3DEncoder'),
     fast_nms=[
         True,
+        False,
+        True,
+        True,
+        True,
+        None,
     ],
     in_channels=6,
     min_spatial_shape=128,
@@ -398,10 +584,20 @@ model = dict(
     query_thr=3000,
     target_by_distance=[
         False,
+        False,
+        True,
+        True,
+        True,
+        True,
     ],
     test_cfg=dict(
         iou_thr=[
             0.5,
+            0.55,
+            0.55,
+            0.55,
+            0.55,
+            0.55,
         ],
         low_sp_thr=0.18,
         score_thr=0,
@@ -411,6 +607,11 @@ model = dict(
     type='UniDet3D',
     use_superpoints=[
         True,
+        True,
+        True,
+        False,
+        False,
+        False,
     ],
     voxel_size=0.02)
 num_channels = 32
@@ -426,6 +627,253 @@ test_dataloader = dict(
     batch_size=1,
     dataset=dict(
         datasets=[
+            dict(
+                ann_file='scannet_infos_val.pkl',
+                data_prefix=dict(
+                    pts='points',
+                    pts_instance_mask='instance_mask',
+                    pts_semantic_mask='semantic_mask',
+                    sp_pts_mask='super_points'),
+                data_root='data/scannet/',
+                ignore_index=20,
+                metainfo=dict(classes=[
+                    'cabinet',
+                    'bed',
+                    'chair',
+                    'sofa',
+                    'table',
+                    'door',
+                    'window',
+                    'bookshelf',
+                    'picture',
+                    'counter',
+                    'desk',
+                    'curtain',
+                    'refrigerator',
+                    'showercurtrain',
+                    'toilet',
+                    'sink',
+                    'bathtub',
+                    'otherfurniture',
+                ]),
+                pipeline=[
+                    dict(
+                        coord_type='DEPTH',
+                        load_dim=6,
+                        shift_height=False,
+                        type='LoadPointsFromFile',
+                        use_color=True,
+                        use_dim=[
+                            0,
+                            1,
+                            2,
+                            3,
+                            4,
+                            5,
+                        ]),
+                    dict(
+                        type='LoadAnnotations3D_',
+                        with_bbox_3d=False,
+                        with_label_3d=False,
+                        with_mask_3d=True,
+                        with_seg_3d=True,
+                        with_sp_mask_3d=True),
+                    dict(rotation_axis=2, type='GlobalAlignment'),
+                    dict(
+                        flip=False,
+                        img_scale=(
+                            1333,
+                            800,
+                        ),
+                        pts_scale_ratio=1,
+                        transforms=[
+                            dict(
+                                color_mean=[
+                                    127.5,
+                                    127.5,
+                                    127.5,
+                                ],
+                                type='NormalizePointsColor_'),
+                        ],
+                        type='MultiScaleFlipAug3D'),
+                    dict(
+                        keys=[
+                            'points',
+                            'sp_pts_mask',
+                        ],
+                        type='Pack3DDetInputs_'),
+                ],
+                test_mode=True,
+                type='ScanNetDetDataset'),
+            dict(
+                ann_file='s3dis_sp_infos_Area_5.pkl',
+                backend_args=None,
+                box_type_3d='Depth',
+                data_prefix=dict(
+                    pts='points',
+                    pts_instance_mask='instance_mask',
+                    pts_semantic_mask='semantic_mask',
+                    sp_pts_mask='super_points'),
+                data_root='data/s3dis/',
+                pipeline=[
+                    dict(
+                        coord_type='DEPTH',
+                        load_dim=6,
+                        shift_height=False,
+                        type='LoadPointsFromFile',
+                        use_color=True,
+                        use_dim=[
+                            0,
+                            1,
+                            2,
+                            3,
+                            4,
+                            5,
+                        ]),
+                    dict(
+                        type='LoadAnnotations3D_',
+                        with_bbox_3d=False,
+                        with_label_3d=False,
+                        with_mask_3d=True,
+                        with_seg_3d=True,
+                        with_sp_mask_3d=True),
+                    dict(
+                        flip=False,
+                        img_scale=(
+                            1333,
+                            800,
+                        ),
+                        pts_scale_ratio=1,
+                        transforms=[
+                            dict(num_points=180000, type='PointSample_'),
+                            dict(
+                                color_mean=[
+                                    127.5,
+                                    127.5,
+                                    127.5,
+                                ],
+                                type='NormalizePointsColor_'),
+                        ],
+                        type='MultiScaleFlipAug3D'),
+                    dict(
+                        keys=[
+                            'points',
+                            'sp_pts_mask',
+                        ],
+                        type='Pack3DDetInputs_'),
+                ],
+                test_mode=True,
+                type='S3DISSegDetDataset'),
+            dict(
+                ann_file='multiscan_infos_val.pkl',
+                data_prefix=dict(
+                    pts='points',
+                    pts_instance_mask='instance_mask',
+                    pts_semantic_mask='semantic_mask',
+                    sp_pts_mask='super_points'),
+                data_root='data/multiscan/bins',
+                pipeline=[
+                    dict(
+                        coord_type='DEPTH',
+                        load_dim=6,
+                        shift_height=False,
+                        type='LoadPointsFromFile',
+                        use_color=True,
+                        use_dim=[
+                            0,
+                            1,
+                            2,
+                            3,
+                            4,
+                            5,
+                        ]),
+                    dict(
+                        type='LoadAnnotations3D_',
+                        with_bbox_3d=False,
+                        with_label_3d=False,
+                        with_sp_mask_3d=True),
+                    dict(
+                        flip=False,
+                        img_scale=(
+                            1333,
+                            800,
+                        ),
+                        pts_scale_ratio=1,
+                        transforms=[
+                            dict(num_points=100000, type='PointSample_'),
+                            dict(
+                                color_mean=[
+                                    127.5,
+                                    127.5,
+                                    127.5,
+                                ],
+                                type='NormalizePointsColor_'),
+                        ],
+                        type='MultiScaleFlipAug3D'),
+                    dict(
+                        keys=[
+                            'points',
+                            'sp_pts_mask',
+                        ],
+                        type='Pack3DDetInputs_'),
+                ],
+                test_mode=True,
+                type='MultiScan_'),
+            dict(
+                ann_file='3rscan_infos_val.pkl',
+                data_prefix=dict(
+                    pts='points',
+                    pts_instance_mask='instance_mask',
+                    pts_semantic_mask='semantic_mask',
+                    sp_pts_mask='super_points_spt'),
+                data_root='data/3rscan',
+                pipeline=[
+                    dict(
+                        coord_type='DEPTH',
+                        load_dim=6,
+                        shift_height=False,
+                        type='LoadPointsFromFile',
+                        use_color=True,
+                        use_dim=[
+                            0,
+                            1,
+                            2,
+                            3,
+                            4,
+                            5,
+                        ]),
+                    dict(
+                        type='LoadAnnotations3D_',
+                        with_bbox_3d=False,
+                        with_label_3d=False,
+                        with_sp_mask_3d=True),
+                    dict(
+                        flip=False,
+                        img_scale=(
+                            1333,
+                            800,
+                        ),
+                        pts_scale_ratio=1,
+                        transforms=[
+                            dict(num_points=100000, type='PointSample_'),
+                            dict(
+                                color_mean=[
+                                    127.5,
+                                    127.5,
+                                    127.5,
+                                ],
+                                type='NormalizePointsColor_'),
+                        ],
+                        type='MultiScaleFlipAug3D'),
+                    dict(
+                        keys=[
+                            'points',
+                            'sp_pts_mask',
+                        ],
+                        type='Pack3DDetInputs_'),
+                ],
+                test_mode=True,
+                type='ThreeRScan_'),
             dict(
                 ann_file='scannetpp_infos_val.pkl',
                 data_prefix=dict(
@@ -481,6 +929,70 @@ test_dataloader = dict(
                 ],
                 test_mode=True,
                 type='Scannetpp_'),
+            dict(
+                ann_file='arkitscenes_offline_infos_val.pkl',
+                data_prefix=dict(
+                    pts='offline_prepared_data', sp_pts_mask='super_points'),
+                data_root='data/arkitscenes',
+                pipeline=[
+                    dict(
+                        coord_type='DEPTH',
+                        load_dim=6,
+                        shift_height=False,
+                        type='LoadPointsFromFile',
+                        use_color=True,
+                        use_dim=[
+                            0,
+                            1,
+                            2,
+                            3,
+                            4,
+                            5,
+                        ]),
+                    dict(
+                        type='LoadAnnotations3D_',
+                        with_bbox_3d=False,
+                        with_label_3d=False,
+                        with_sp_mask_3d=True),
+                    dict(
+                        flip=False,
+                        img_scale=(
+                            1333,
+                            800,
+                        ),
+                        pts_scale_ratio=1,
+                        transforms=[
+                            dict(num_points=100000, type='PointSample_'),
+                            dict(
+                                color_mean=[
+                                    0,
+                                    0,
+                                    0,
+                                ],
+                                color_std=[
+                                    255,
+                                    255,
+                                    255,
+                                ],
+                                type='DenormalizePointsColor'),
+                            dict(
+                                color_mean=[
+                                    127.5,
+                                    127.5,
+                                    127.5,
+                                ],
+                                type='NormalizePointsColor_'),
+                        ],
+                        type='MultiScaleFlipAug3D'),
+                    dict(
+                        keys=[
+                            'points',
+                            'sp_pts_mask',
+                        ],
+                        type='Pack3DDetInputs_'),
+                ],
+                test_mode=True,
+                type='ARKitScenesOfflineDataset'),
         ],
         type='ConcatDataset_'),
     drop_last=False,
@@ -493,8 +1005,8 @@ test_evaluator = dict(
         's3dis',
         'multiscan',
         '3rscan',
-        'arkitscenes',
         'scannetpp',
+        'arkitscenes',
     ],
     datasets_classes=[
         [
@@ -562,25 +1074,6 @@ test_evaluator = dict(
             'sink',
             'bathtub',
             'otherfurniture',
-        ],
-        [
-            'cabinet',
-            'refrigerator',
-            'shelf',
-            'stove',
-            'bed',
-            'sink',
-            'washer',
-            'toilet',
-            'bathtub',
-            'oven',
-            'dishwasher',
-            'fireplace',
-            'stool',
-            'chair',
-            'table',
-            'tv_monitor',
-            'sofa',
         ],
         [
             'table',
@@ -667,6 +1160,25 @@ test_evaluator = dict(
             'headphones',
             'stapler',
             'marker',
+        ],
+        [
+            'cabinet',
+            'refrigerator',
+            'shelf',
+            'stove',
+            'bed',
+            'sink',
+            'washer',
+            'toilet',
+            'bathtub',
+            'oven',
+            'dishwasher',
+            'fireplace',
+            'stool',
+            'chair',
+            'table',
+            'tv_monitor',
+            'sofa',
         ],
     ],
     type='IndoorMetric_')
@@ -968,6 +1480,770 @@ train_dataloader = dict(
     batch_size=8,
     dataset=dict(
         datasets=[
+            dict(
+                ann_file='scannet_infos_train.pkl',
+                data_prefix=dict(
+                    pts='points',
+                    pts_instance_mask='instance_mask',
+                    pts_semantic_mask='semantic_mask',
+                    sp_pts_mask='super_points'),
+                data_root='data/scannet/',
+                ignore_index=20,
+                metainfo=dict(classes=[
+                    'cabinet',
+                    'bed',
+                    'chair',
+                    'sofa',
+                    'table',
+                    'door',
+                    'window',
+                    'bookshelf',
+                    'picture',
+                    'counter',
+                    'desk',
+                    'curtain',
+                    'refrigerator',
+                    'showercurtrain',
+                    'toilet',
+                    'sink',
+                    'bathtub',
+                    'otherfurniture',
+                ]),
+                pipeline=[
+                    dict(
+                        coord_type='DEPTH',
+                        load_dim=6,
+                        shift_height=False,
+                        type='LoadPointsFromFile',
+                        use_color=True,
+                        use_dim=[
+                            0,
+                            1,
+                            2,
+                            3,
+                            4,
+                            5,
+                        ]),
+                    dict(
+                        type='LoadAnnotations3D_',
+                        with_bbox_3d=False,
+                        with_label_3d=False,
+                        with_mask_3d=True,
+                        with_seg_3d=True,
+                        with_sp_mask_3d=True),
+                    dict(rotation_axis=2, type='GlobalAlignment'),
+                    dict(type='PointSegClassMapping'),
+                    dict(
+                        flip_ratio_bev_horizontal=0.5,
+                        flip_ratio_bev_vertical=0.5,
+                        sync_2d=False,
+                        type='RandomFlip3D'),
+                    dict(
+                        rot_range=[
+                            -3.14,
+                            3.14,
+                        ],
+                        scale_ratio_range=[
+                            0.8,
+                            1.2,
+                        ],
+                        shift_height=False,
+                        translation_std=[
+                            0.1,
+                            0.1,
+                            0.1,
+                        ],
+                        type='GlobalRotScaleTrans'),
+                    dict(
+                        color_mean=[
+                            127.5,
+                            127.5,
+                            127.5,
+                        ],
+                        type='NormalizePointsColor_'),
+                    dict(
+                        num_classes=20,
+                        stuff_classes=[
+                            0,
+                            1,
+                        ],
+                        type='PointDetClassMappingScanNet'),
+                    dict(
+                        gran=[
+                            6,
+                            20,
+                        ],
+                        mag=[
+                            40,
+                            160,
+                        ],
+                        p=0.5,
+                        type='ElasticTransfrom',
+                        voxel_size=0.02),
+                    dict(
+                        keys=[
+                            'points',
+                            'gt_labels_3d',
+                            'pts_semantic_mask',
+                            'pts_instance_mask',
+                            'sp_pts_mask',
+                            'gt_sp_masks',
+                            'elastic_coords',
+                        ],
+                        type='Pack3DDetInputs_'),
+                ],
+                scene_idxs=None,
+                test_mode=False,
+                type='ScanNetDetDataset'),
+            dict(
+                ann_file='s3dis_sp_infos_Area_1.pkl',
+                backend_args=None,
+                box_type_3d='Depth',
+                data_prefix=dict(
+                    pts='points',
+                    pts_instance_mask='instance_mask',
+                    pts_semantic_mask='semantic_mask',
+                    sp_pts_mask='super_points'),
+                data_root='data/s3dis/',
+                filter_empty_gt=True,
+                partition=0.33,
+                pipeline=[
+                    dict(
+                        coord_type='DEPTH',
+                        load_dim=6,
+                        shift_height=False,
+                        type='LoadPointsFromFile',
+                        use_color=True,
+                        use_dim=[
+                            0,
+                            1,
+                            2,
+                            3,
+                            4,
+                            5,
+                        ]),
+                    dict(
+                        type='LoadAnnotations3D_',
+                        with_bbox_3d=False,
+                        with_label_3d=False,
+                        with_mask_3d=True,
+                        with_seg_3d=True,
+                        with_sp_mask_3d=True),
+                    dict(num_points=180000, type='PointSample_'),
+                    dict(
+                        flip_ratio_bev_horizontal=0.5,
+                        flip_ratio_bev_vertical=0.5,
+                        sync_2d=False,
+                        type='RandomFlip3D'),
+                    dict(
+                        rot_range=[
+                            0.0,
+                            0.0,
+                        ],
+                        scale_ratio_range=[
+                            0.9,
+                            1.1,
+                        ],
+                        shift_height=False,
+                        translation_std=[
+                            0.1,
+                            0.1,
+                            0.1,
+                        ],
+                        type='GlobalRotScaleTrans'),
+                    dict(
+                        classes=[
+                            7,
+                            8,
+                            9,
+                            10,
+                            11,
+                        ],
+                        type='PointDetClassMappingS3DIS'),
+                    dict(
+                        color_mean=[
+                            127.5,
+                            127.5,
+                            127.5,
+                        ],
+                        type='NormalizePointsColor_'),
+                    dict(
+                        gran=[
+                            6,
+                            20,
+                        ],
+                        mag=[
+                            40,
+                            160,
+                        ],
+                        p=-1,
+                        type='ElasticTransfrom',
+                        voxel_size=0.02),
+                    dict(
+                        keys=[
+                            'points',
+                            'elastic_coords',
+                            'gt_labels_3d',
+                            'sp_pts_mask',
+                            'gt_sp_masks',
+                            'pts_semantic_mask',
+                            'pts_instance_mask',
+                        ],
+                        type='Pack3DDetInputs_'),
+                ],
+                type='S3DISSegDetDataset'),
+            dict(
+                ann_file='s3dis_sp_infos_Area_2.pkl',
+                backend_args=None,
+                box_type_3d='Depth',
+                data_prefix=dict(
+                    pts='points',
+                    pts_instance_mask='instance_mask',
+                    pts_semantic_mask='semantic_mask',
+                    sp_pts_mask='super_points'),
+                data_root='data/s3dis/',
+                filter_empty_gt=True,
+                partition=0.33,
+                pipeline=[
+                    dict(
+                        coord_type='DEPTH',
+                        load_dim=6,
+                        shift_height=False,
+                        type='LoadPointsFromFile',
+                        use_color=True,
+                        use_dim=[
+                            0,
+                            1,
+                            2,
+                            3,
+                            4,
+                            5,
+                        ]),
+                    dict(
+                        type='LoadAnnotations3D_',
+                        with_bbox_3d=False,
+                        with_label_3d=False,
+                        with_mask_3d=True,
+                        with_seg_3d=True,
+                        with_sp_mask_3d=True),
+                    dict(num_points=180000, type='PointSample_'),
+                    dict(
+                        flip_ratio_bev_horizontal=0.5,
+                        flip_ratio_bev_vertical=0.5,
+                        sync_2d=False,
+                        type='RandomFlip3D'),
+                    dict(
+                        rot_range=[
+                            0.0,
+                            0.0,
+                        ],
+                        scale_ratio_range=[
+                            0.9,
+                            1.1,
+                        ],
+                        shift_height=False,
+                        translation_std=[
+                            0.1,
+                            0.1,
+                            0.1,
+                        ],
+                        type='GlobalRotScaleTrans'),
+                    dict(
+                        classes=[
+                            7,
+                            8,
+                            9,
+                            10,
+                            11,
+                        ],
+                        type='PointDetClassMappingS3DIS'),
+                    dict(
+                        color_mean=[
+                            127.5,
+                            127.5,
+                            127.5,
+                        ],
+                        type='NormalizePointsColor_'),
+                    dict(
+                        gran=[
+                            6,
+                            20,
+                        ],
+                        mag=[
+                            40,
+                            160,
+                        ],
+                        p=-1,
+                        type='ElasticTransfrom',
+                        voxel_size=0.02),
+                    dict(
+                        keys=[
+                            'points',
+                            'elastic_coords',
+                            'gt_labels_3d',
+                            'sp_pts_mask',
+                            'gt_sp_masks',
+                            'pts_semantic_mask',
+                            'pts_instance_mask',
+                        ],
+                        type='Pack3DDetInputs_'),
+                ],
+                type='S3DISSegDetDataset'),
+            dict(
+                ann_file='s3dis_sp_infos_Area_3.pkl',
+                backend_args=None,
+                box_type_3d='Depth',
+                data_prefix=dict(
+                    pts='points',
+                    pts_instance_mask='instance_mask',
+                    pts_semantic_mask='semantic_mask',
+                    sp_pts_mask='super_points'),
+                data_root='data/s3dis/',
+                filter_empty_gt=True,
+                partition=0.33,
+                pipeline=[
+                    dict(
+                        coord_type='DEPTH',
+                        load_dim=6,
+                        shift_height=False,
+                        type='LoadPointsFromFile',
+                        use_color=True,
+                        use_dim=[
+                            0,
+                            1,
+                            2,
+                            3,
+                            4,
+                            5,
+                        ]),
+                    dict(
+                        type='LoadAnnotations3D_',
+                        with_bbox_3d=False,
+                        with_label_3d=False,
+                        with_mask_3d=True,
+                        with_seg_3d=True,
+                        with_sp_mask_3d=True),
+                    dict(num_points=180000, type='PointSample_'),
+                    dict(
+                        flip_ratio_bev_horizontal=0.5,
+                        flip_ratio_bev_vertical=0.5,
+                        sync_2d=False,
+                        type='RandomFlip3D'),
+                    dict(
+                        rot_range=[
+                            0.0,
+                            0.0,
+                        ],
+                        scale_ratio_range=[
+                            0.9,
+                            1.1,
+                        ],
+                        shift_height=False,
+                        translation_std=[
+                            0.1,
+                            0.1,
+                            0.1,
+                        ],
+                        type='GlobalRotScaleTrans'),
+                    dict(
+                        classes=[
+                            7,
+                            8,
+                            9,
+                            10,
+                            11,
+                        ],
+                        type='PointDetClassMappingS3DIS'),
+                    dict(
+                        color_mean=[
+                            127.5,
+                            127.5,
+                            127.5,
+                        ],
+                        type='NormalizePointsColor_'),
+                    dict(
+                        gran=[
+                            6,
+                            20,
+                        ],
+                        mag=[
+                            40,
+                            160,
+                        ],
+                        p=-1,
+                        type='ElasticTransfrom',
+                        voxel_size=0.02),
+                    dict(
+                        keys=[
+                            'points',
+                            'elastic_coords',
+                            'gt_labels_3d',
+                            'sp_pts_mask',
+                            'gt_sp_masks',
+                            'pts_semantic_mask',
+                            'pts_instance_mask',
+                        ],
+                        type='Pack3DDetInputs_'),
+                ],
+                type='S3DISSegDetDataset'),
+            dict(
+                ann_file='s3dis_sp_infos_Area_4.pkl',
+                backend_args=None,
+                box_type_3d='Depth',
+                data_prefix=dict(
+                    pts='points',
+                    pts_instance_mask='instance_mask',
+                    pts_semantic_mask='semantic_mask',
+                    sp_pts_mask='super_points'),
+                data_root='data/s3dis/',
+                filter_empty_gt=True,
+                partition=0.33,
+                pipeline=[
+                    dict(
+                        coord_type='DEPTH',
+                        load_dim=6,
+                        shift_height=False,
+                        type='LoadPointsFromFile',
+                        use_color=True,
+                        use_dim=[
+                            0,
+                            1,
+                            2,
+                            3,
+                            4,
+                            5,
+                        ]),
+                    dict(
+                        type='LoadAnnotations3D_',
+                        with_bbox_3d=False,
+                        with_label_3d=False,
+                        with_mask_3d=True,
+                        with_seg_3d=True,
+                        with_sp_mask_3d=True),
+                    dict(num_points=180000, type='PointSample_'),
+                    dict(
+                        flip_ratio_bev_horizontal=0.5,
+                        flip_ratio_bev_vertical=0.5,
+                        sync_2d=False,
+                        type='RandomFlip3D'),
+                    dict(
+                        rot_range=[
+                            0.0,
+                            0.0,
+                        ],
+                        scale_ratio_range=[
+                            0.9,
+                            1.1,
+                        ],
+                        shift_height=False,
+                        translation_std=[
+                            0.1,
+                            0.1,
+                            0.1,
+                        ],
+                        type='GlobalRotScaleTrans'),
+                    dict(
+                        classes=[
+                            7,
+                            8,
+                            9,
+                            10,
+                            11,
+                        ],
+                        type='PointDetClassMappingS3DIS'),
+                    dict(
+                        color_mean=[
+                            127.5,
+                            127.5,
+                            127.5,
+                        ],
+                        type='NormalizePointsColor_'),
+                    dict(
+                        gran=[
+                            6,
+                            20,
+                        ],
+                        mag=[
+                            40,
+                            160,
+                        ],
+                        p=-1,
+                        type='ElasticTransfrom',
+                        voxel_size=0.02),
+                    dict(
+                        keys=[
+                            'points',
+                            'elastic_coords',
+                            'gt_labels_3d',
+                            'sp_pts_mask',
+                            'gt_sp_masks',
+                            'pts_semantic_mask',
+                            'pts_instance_mask',
+                        ],
+                        type='Pack3DDetInputs_'),
+                ],
+                type='S3DISSegDetDataset'),
+            dict(
+                ann_file='s3dis_sp_infos_Area_6.pkl',
+                backend_args=None,
+                box_type_3d='Depth',
+                data_prefix=dict(
+                    pts='points',
+                    pts_instance_mask='instance_mask',
+                    pts_semantic_mask='semantic_mask',
+                    sp_pts_mask='super_points'),
+                data_root='data/s3dis/',
+                filter_empty_gt=True,
+                partition=0.33,
+                pipeline=[
+                    dict(
+                        coord_type='DEPTH',
+                        load_dim=6,
+                        shift_height=False,
+                        type='LoadPointsFromFile',
+                        use_color=True,
+                        use_dim=[
+                            0,
+                            1,
+                            2,
+                            3,
+                            4,
+                            5,
+                        ]),
+                    dict(
+                        type='LoadAnnotations3D_',
+                        with_bbox_3d=False,
+                        with_label_3d=False,
+                        with_mask_3d=True,
+                        with_seg_3d=True,
+                        with_sp_mask_3d=True),
+                    dict(num_points=180000, type='PointSample_'),
+                    dict(
+                        flip_ratio_bev_horizontal=0.5,
+                        flip_ratio_bev_vertical=0.5,
+                        sync_2d=False,
+                        type='RandomFlip3D'),
+                    dict(
+                        rot_range=[
+                            0.0,
+                            0.0,
+                        ],
+                        scale_ratio_range=[
+                            0.9,
+                            1.1,
+                        ],
+                        shift_height=False,
+                        translation_std=[
+                            0.1,
+                            0.1,
+                            0.1,
+                        ],
+                        type='GlobalRotScaleTrans'),
+                    dict(
+                        classes=[
+                            7,
+                            8,
+                            9,
+                            10,
+                            11,
+                        ],
+                        type='PointDetClassMappingS3DIS'),
+                    dict(
+                        color_mean=[
+                            127.5,
+                            127.5,
+                            127.5,
+                        ],
+                        type='NormalizePointsColor_'),
+                    dict(
+                        gran=[
+                            6,
+                            20,
+                        ],
+                        mag=[
+                            40,
+                            160,
+                        ],
+                        p=-1,
+                        type='ElasticTransfrom',
+                        voxel_size=0.02),
+                    dict(
+                        keys=[
+                            'points',
+                            'elastic_coords',
+                            'gt_labels_3d',
+                            'sp_pts_mask',
+                            'gt_sp_masks',
+                            'pts_semantic_mask',
+                            'pts_instance_mask',
+                        ],
+                        type='Pack3DDetInputs_'),
+                ],
+                type='S3DISSegDetDataset'),
+            dict(
+                ann_file='multiscan_infos_train.pkl',
+                data_prefix=dict(
+                    pts='points',
+                    pts_instance_mask='instance_mask',
+                    pts_semantic_mask='semantic_mask',
+                    sp_pts_mask='super_points'),
+                data_root='data/multiscan/bins',
+                partition=0.25,
+                pipeline=[
+                    dict(
+                        coord_type='DEPTH',
+                        load_dim=6,
+                        shift_height=False,
+                        type='LoadPointsFromFile',
+                        use_color=True,
+                        use_dim=[
+                            0,
+                            1,
+                            2,
+                            3,
+                            4,
+                            5,
+                        ]),
+                    dict(
+                        type='LoadAnnotations3D_',
+                        with_bbox_3d=True,
+                        with_label_3d=True,
+                        with_sp_mask_3d=True),
+                    dict(num_points=100000, type='PointSample_'),
+                    dict(
+                        flip_ratio_bev_horizontal=0.5,
+                        flip_ratio_bev_vertical=0.5,
+                        sync_2d=False,
+                        type='RandomFlip3D'),
+                    dict(
+                        rot_range=[
+                            0,
+                            0,
+                        ],
+                        scale_ratio_range=[
+                            0.9,
+                            1.1,
+                        ],
+                        shift_height=False,
+                        translation_std=[
+                            0.1,
+                            0.1,
+                            0.1,
+                        ],
+                        type='GlobalRotScaleTrans'),
+                    dict(
+                        color_mean=[
+                            127.5,
+                            127.5,
+                            127.5,
+                        ],
+                        type='NormalizePointsColor_'),
+                    dict(
+                        gran=[
+                            6,
+                            20,
+                        ],
+                        mag=[
+                            40,
+                            160,
+                        ],
+                        p=-1,
+                        type='ElasticTransfrom',
+                        voxel_size=0.02),
+                    dict(
+                        keys=[
+                            'points',
+                            'elastic_coords',
+                            'gt_bboxes_3d',
+                            'gt_labels_3d',
+                            'sp_pts_mask',
+                        ],
+                        type='Pack3DDetInputs_'),
+                ],
+                test_mode=False,
+                type='MultiScan_'),
+            dict(
+                ann_file='3rscan_infos_train.pkl',
+                data_prefix=dict(
+                    pts='points',
+                    pts_instance_mask='instance_mask',
+                    pts_semantic_mask='semantic_mask',
+                    sp_pts_mask='super_points_spt'),
+                data_root='data/3rscan',
+                partition=0.15,
+                pipeline=[
+                    dict(
+                        coord_type='DEPTH',
+                        load_dim=6,
+                        shift_height=False,
+                        type='LoadPointsFromFile',
+                        use_color=True,
+                        use_dim=[
+                            0,
+                            1,
+                            2,
+                            3,
+                            4,
+                            5,
+                        ]),
+                    dict(
+                        type='LoadAnnotations3D_',
+                        with_bbox_3d=True,
+                        with_label_3d=True,
+                        with_sp_mask_3d=True),
+                    dict(num_points=100000, type='PointSample_'),
+                    dict(
+                        flip_ratio_bev_horizontal=0.5,
+                        flip_ratio_bev_vertical=0.5,
+                        sync_2d=False,
+                        type='RandomFlip3D'),
+                    dict(
+                        rot_range=[
+                            0,
+                            0,
+                        ],
+                        scale_ratio_range=[
+                            0.9,
+                            1.1,
+                        ],
+                        shift_height=False,
+                        translation_std=[
+                            0.1,
+                            0.1,
+                            0.1,
+                        ],
+                        type='GlobalRotScaleTrans'),
+                    dict(
+                        color_mean=[
+                            127.5,
+                            127.5,
+                            127.5,
+                        ],
+                        type='NormalizePointsColor_'),
+                    dict(
+                        gran=[
+                            6,
+                            20,
+                        ],
+                        mag=[
+                            40,
+                            160,
+                        ],
+                        p=-1,
+                        type='ElasticTransfrom',
+                        voxel_size=0.02),
+                    dict(
+                        keys=[
+                            'points',
+                            'elastic_coords',
+                            'gt_bboxes_3d',
+                            'gt_labels_3d',
+                            'sp_pts_mask',
+                        ],
+                        type='Pack3DDetInputs_'),
+                ],
+                test_mode=False,
+                type='ThreeRScan_'),
             dict(
                 ann_file='scannetpp_infos_train.pkl',
                 data_prefix=dict(
@@ -1601,6 +2877,253 @@ val_dataloader = dict(
     dataset=dict(
         datasets=[
             dict(
+                ann_file='scannet_infos_val.pkl',
+                data_prefix=dict(
+                    pts='points',
+                    pts_instance_mask='instance_mask',
+                    pts_semantic_mask='semantic_mask',
+                    sp_pts_mask='super_points'),
+                data_root='data/scannet/',
+                ignore_index=20,
+                metainfo=dict(classes=[
+                    'cabinet',
+                    'bed',
+                    'chair',
+                    'sofa',
+                    'table',
+                    'door',
+                    'window',
+                    'bookshelf',
+                    'picture',
+                    'counter',
+                    'desk',
+                    'curtain',
+                    'refrigerator',
+                    'showercurtrain',
+                    'toilet',
+                    'sink',
+                    'bathtub',
+                    'otherfurniture',
+                ]),
+                pipeline=[
+                    dict(
+                        coord_type='DEPTH',
+                        load_dim=6,
+                        shift_height=False,
+                        type='LoadPointsFromFile',
+                        use_color=True,
+                        use_dim=[
+                            0,
+                            1,
+                            2,
+                            3,
+                            4,
+                            5,
+                        ]),
+                    dict(
+                        type='LoadAnnotations3D_',
+                        with_bbox_3d=False,
+                        with_label_3d=False,
+                        with_mask_3d=True,
+                        with_seg_3d=True,
+                        with_sp_mask_3d=True),
+                    dict(rotation_axis=2, type='GlobalAlignment'),
+                    dict(
+                        flip=False,
+                        img_scale=(
+                            1333,
+                            800,
+                        ),
+                        pts_scale_ratio=1,
+                        transforms=[
+                            dict(
+                                color_mean=[
+                                    127.5,
+                                    127.5,
+                                    127.5,
+                                ],
+                                type='NormalizePointsColor_'),
+                        ],
+                        type='MultiScaleFlipAug3D'),
+                    dict(
+                        keys=[
+                            'points',
+                            'sp_pts_mask',
+                        ],
+                        type='Pack3DDetInputs_'),
+                ],
+                test_mode=True,
+                type='ScanNetDetDataset'),
+            dict(
+                ann_file='s3dis_sp_infos_Area_5.pkl',
+                backend_args=None,
+                box_type_3d='Depth',
+                data_prefix=dict(
+                    pts='points',
+                    pts_instance_mask='instance_mask',
+                    pts_semantic_mask='semantic_mask',
+                    sp_pts_mask='super_points'),
+                data_root='data/s3dis/',
+                pipeline=[
+                    dict(
+                        coord_type='DEPTH',
+                        load_dim=6,
+                        shift_height=False,
+                        type='LoadPointsFromFile',
+                        use_color=True,
+                        use_dim=[
+                            0,
+                            1,
+                            2,
+                            3,
+                            4,
+                            5,
+                        ]),
+                    dict(
+                        type='LoadAnnotations3D_',
+                        with_bbox_3d=False,
+                        with_label_3d=False,
+                        with_mask_3d=True,
+                        with_seg_3d=True,
+                        with_sp_mask_3d=True),
+                    dict(
+                        flip=False,
+                        img_scale=(
+                            1333,
+                            800,
+                        ),
+                        pts_scale_ratio=1,
+                        transforms=[
+                            dict(num_points=180000, type='PointSample_'),
+                            dict(
+                                color_mean=[
+                                    127.5,
+                                    127.5,
+                                    127.5,
+                                ],
+                                type='NormalizePointsColor_'),
+                        ],
+                        type='MultiScaleFlipAug3D'),
+                    dict(
+                        keys=[
+                            'points',
+                            'sp_pts_mask',
+                        ],
+                        type='Pack3DDetInputs_'),
+                ],
+                test_mode=True,
+                type='S3DISSegDetDataset'),
+            dict(
+                ann_file='multiscan_infos_val.pkl',
+                data_prefix=dict(
+                    pts='points',
+                    pts_instance_mask='instance_mask',
+                    pts_semantic_mask='semantic_mask',
+                    sp_pts_mask='super_points'),
+                data_root='data/multiscan/bins',
+                pipeline=[
+                    dict(
+                        coord_type='DEPTH',
+                        load_dim=6,
+                        shift_height=False,
+                        type='LoadPointsFromFile',
+                        use_color=True,
+                        use_dim=[
+                            0,
+                            1,
+                            2,
+                            3,
+                            4,
+                            5,
+                        ]),
+                    dict(
+                        type='LoadAnnotations3D_',
+                        with_bbox_3d=False,
+                        with_label_3d=False,
+                        with_sp_mask_3d=True),
+                    dict(
+                        flip=False,
+                        img_scale=(
+                            1333,
+                            800,
+                        ),
+                        pts_scale_ratio=1,
+                        transforms=[
+                            dict(num_points=100000, type='PointSample_'),
+                            dict(
+                                color_mean=[
+                                    127.5,
+                                    127.5,
+                                    127.5,
+                                ],
+                                type='NormalizePointsColor_'),
+                        ],
+                        type='MultiScaleFlipAug3D'),
+                    dict(
+                        keys=[
+                            'points',
+                            'sp_pts_mask',
+                        ],
+                        type='Pack3DDetInputs_'),
+                ],
+                test_mode=True,
+                type='MultiScan_'),
+            dict(
+                ann_file='3rscan_infos_val.pkl',
+                data_prefix=dict(
+                    pts='points',
+                    pts_instance_mask='instance_mask',
+                    pts_semantic_mask='semantic_mask',
+                    sp_pts_mask='super_points_spt'),
+                data_root='data/3rscan',
+                pipeline=[
+                    dict(
+                        coord_type='DEPTH',
+                        load_dim=6,
+                        shift_height=False,
+                        type='LoadPointsFromFile',
+                        use_color=True,
+                        use_dim=[
+                            0,
+                            1,
+                            2,
+                            3,
+                            4,
+                            5,
+                        ]),
+                    dict(
+                        type='LoadAnnotations3D_',
+                        with_bbox_3d=False,
+                        with_label_3d=False,
+                        with_sp_mask_3d=True),
+                    dict(
+                        flip=False,
+                        img_scale=(
+                            1333,
+                            800,
+                        ),
+                        pts_scale_ratio=1,
+                        transforms=[
+                            dict(num_points=100000, type='PointSample_'),
+                            dict(
+                                color_mean=[
+                                    127.5,
+                                    127.5,
+                                    127.5,
+                                ],
+                                type='NormalizePointsColor_'),
+                        ],
+                        type='MultiScaleFlipAug3D'),
+                    dict(
+                        keys=[
+                            'points',
+                            'sp_pts_mask',
+                        ],
+                        type='Pack3DDetInputs_'),
+                ],
+                test_mode=True,
+                type='ThreeRScan_'),
+            dict(
                 ann_file='scannetpp_infos_val.pkl',
                 data_prefix=dict(
                     pts='points',
@@ -1655,6 +3178,70 @@ val_dataloader = dict(
                 ],
                 test_mode=True,
                 type='Scannetpp_'),
+            dict(
+                ann_file='arkitscenes_offline_infos_val.pkl',
+                data_prefix=dict(
+                    pts='offline_prepared_data', sp_pts_mask='super_points'),
+                data_root='data/arkitscenes',
+                pipeline=[
+                    dict(
+                        coord_type='DEPTH',
+                        load_dim=6,
+                        shift_height=False,
+                        type='LoadPointsFromFile',
+                        use_color=True,
+                        use_dim=[
+                            0,
+                            1,
+                            2,
+                            3,
+                            4,
+                            5,
+                        ]),
+                    dict(
+                        type='LoadAnnotations3D_',
+                        with_bbox_3d=False,
+                        with_label_3d=False,
+                        with_sp_mask_3d=True),
+                    dict(
+                        flip=False,
+                        img_scale=(
+                            1333,
+                            800,
+                        ),
+                        pts_scale_ratio=1,
+                        transforms=[
+                            dict(num_points=100000, type='PointSample_'),
+                            dict(
+                                color_mean=[
+                                    0,
+                                    0,
+                                    0,
+                                ],
+                                color_std=[
+                                    255,
+                                    255,
+                                    255,
+                                ],
+                                type='DenormalizePointsColor'),
+                            dict(
+                                color_mean=[
+                                    127.5,
+                                    127.5,
+                                    127.5,
+                                ],
+                                type='NormalizePointsColor_'),
+                        ],
+                        type='MultiScaleFlipAug3D'),
+                    dict(
+                        keys=[
+                            'points',
+                            'sp_pts_mask',
+                        ],
+                        type='Pack3DDetInputs_'),
+                ],
+                test_mode=True,
+                type='ARKitScenesOfflineDataset'),
         ],
         type='ConcatDataset_'),
     drop_last=False,
@@ -1663,7 +3250,12 @@ val_dataloader = dict(
     sampler=dict(shuffle=False, type='DefaultSampler'))
 val_evaluator = dict(
     datasets=[
+        'scannet',
+        's3dis',
+        'multiscan',
+        '3rscan',
         'scannetpp',
+        'arkitscenes',
     ],
     datasets_classes=[
         [
@@ -1731,25 +3323,6 @@ val_evaluator = dict(
             'sink',
             'bathtub',
             'otherfurniture',
-        ],
-        [
-            'cabinet',
-            'refrigerator',
-            'shelf',
-            'stove',
-            'bed',
-            'sink',
-            'washer',
-            'toilet',
-            'bathtub',
-            'oven',
-            'dishwasher',
-            'fireplace',
-            'stool',
-            'chair',
-            'table',
-            'tv_monitor',
-            'sofa',
         ],
         [
             'table',
@@ -1837,13 +3410,32 @@ val_evaluator = dict(
             'stapler',
             'marker',
         ],
+        [
+            'cabinet',
+            'refrigerator',
+            'shelf',
+            'stove',
+            'bed',
+            'sink',
+            'washer',
+            'toilet',
+            'bathtub',
+            'oven',
+            'dishwasher',
+            'fireplace',
+            'stool',
+            'chair',
+            'table',
+            'tv_monitor',
+            'sofa',
+        ],
     ],
     type='IndoorMetric_')
 voxel_size = 0.02
-work_dir = './work_dirs/unidet3d_train_spp_ar'
+work_dir = './work_dirs/unidet3d_1xb8_scannet_s3dis_multiscan_3rscan_scannetpp_arkitscenes'
 
-06/26 01:16:59 - mmengine - INFO - Distributed training is not used, all SyncBatchNorm (SyncBN) layers in the model will be automatically reverted to BatchNormXd layers if they are used.
-06/26 01:16:59 - mmengine - INFO - Hooks will be executed in the following order:
+06/26 04:31:39 - mmengine - INFO - Distributed training is not used, all SyncBatchNorm (SyncBN) layers in the model will be automatically reverted to BatchNormXd layers if they are used.
+06/26 04:31:39 - mmengine - INFO - Hooks will be executed in the following order:
 before_run:
 (VERY_HIGH   ) RuntimeInfoHook                    
 (BELOW_NORMAL) LoggerHook                         
@@ -1936,9 +3528,118 @@ after_test:
 after_run:
 (BELOW_NORMAL) LoggerHook                         
  -------------------- 
-06/26 01:17:00 - mmengine - INFO - ------------------------------
-06/26 01:17:00 - mmengine - INFO - The length of training dataset: 75
-06/26 01:17:00 - mmengine - INFO - The number of instances per category in the dataset:
+06/26 04:31:42 - mmengine - INFO - ------------------------------
+06/26 04:31:42 - mmengine - INFO - The length of training dataset: 14
+06/26 04:31:42 - mmengine - INFO - The number of instances per category in the dataset:
++----------+--------+
+| category | number |
++----------+--------+
+| table    | 69     |
+| chair    | 155    |
+| sofa     | 6      |
+| bookcase | 90     |
+| board    | 27     |
++----------+--------+
+06/26 04:31:42 - mmengine - INFO - ------------------------------
+06/26 04:31:42 - mmengine - INFO - The length of training dataset: 13
+06/26 04:31:42 - mmengine - INFO - The number of instances per category in the dataset:
++----------+--------+
+| category | number |
++----------+--------+
+| table    | 46     |
+| chair    | 545    |
+| sofa     | 6      |
+| bookcase | 47     |
+| board    | 17     |
++----------+--------+
+06/26 04:31:43 - mmengine - INFO - ------------------------------
+06/26 04:31:43 - mmengine - INFO - The length of training dataset: 7
+06/26 04:31:43 - mmengine - INFO - The number of instances per category in the dataset:
++----------+--------+
+| category | number |
++----------+--------+
+| table    | 30     |
+| chair    | 67     |
+| sofa     | 9      |
+| bookcase | 41     |
+| board    | 12     |
++----------+--------+
+06/26 04:31:43 - mmengine - INFO - ------------------------------
+06/26 04:31:43 - mmengine - INFO - The length of training dataset: 16
+06/26 04:31:43 - mmengine - INFO - The number of instances per category in the dataset:
++----------+--------+
+| category | number |
++----------+--------+
+| table    | 79     |
+| chair    | 159    |
+| sofa     | 14     |
+| bookcase | 98     |
+| board    | 10     |
++----------+--------+
+06/26 04:31:43 - mmengine - INFO - ------------------------------
+06/26 04:31:43 - mmengine - INFO - The length of training dataset: 15
+06/26 04:31:43 - mmengine - INFO - The number of instances per category in the dataset:
++----------+--------+
+| category | number |
++----------+--------+
+| table    | 77     |
+| chair    | 179    |
+| sofa     | 9      |
+| bookcase | 90     |
+| board    | 29     |
++----------+--------+
+06/26 04:31:43 - mmengine - INFO - ------------------------------
+06/26 04:31:43 - mmengine - INFO - The length of training dataset: 43
+06/26 04:31:43 - mmengine - INFO - The number of instances per category in the dataset:
++--------------+--------+
+| category     | number |
++--------------+--------+
+| door         | 212    |
+| table        | 286    |
+| chair        | 328    |
+| cabinet      | 308    |
+| window       | 141    |
+| sofa         | 109    |
+| microwave    | 29     |
+| pillow       | 269    |
+| tv_monitor   | 87     |
+| curtain      | 86     |
+| trash_can    | 77     |
+| suitcase     | 114    |
+| sink         | 54     |
+| backpack     | 28     |
+| bed          | 37     |
+| refrigerator | 31     |
+| toilet       | 39     |
++--------------+--------+
+06/26 04:31:43 - mmengine - INFO - ------------------------------
+06/26 04:31:43 - mmengine - INFO - The length of training dataset: 57
+06/26 04:31:43 - mmengine - INFO - The number of instances per category in the dataset:
++----------------+--------+
+| category       | number |
++----------------+--------+
+| cabinet        | 466    |
+| bed            | 82     |
+| chair          | 873    |
+| sofa           | 103    |
+| table          | 410    |
+| door           | 262    |
+| window         | 256    |
+| bookshelf      | 14     |
+| picture        | 257    |
+| counter        | 76     |
+| desk           | 78     |
+| curtain        | 231    |
+| refrigerator   | 21     |
+| shower curtain | 15     |
+| toilet         | 42     |
+| sink           | 106    |
+| bathtub        | 16     |
+| otherfurniture | 489    |
++----------------+--------+
+06/26 04:31:44 - mmengine - INFO - ------------------------------
+06/26 04:31:44 - mmengine - INFO - The length of training dataset: 75
+06/26 04:31:44 - mmengine - INFO - The number of instances per category in the dataset:
 +-------------------+--------+
 | category          | number |
 +-------------------+--------+
@@ -2027,9 +3728,9 @@ after_run:
 | stapler           | 13     |
 | marker            | 15     |
 +-------------------+--------+
-06/26 01:17:01 - mmengine - INFO - ------------------------------
-06/26 01:17:01 - mmengine - INFO - The length of training dataset: 359
-06/26 01:17:01 - mmengine - INFO - The number of instances per category in the dataset:
+06/26 04:31:44 - mmengine - INFO - ------------------------------
+06/26 04:31:44 - mmengine - INFO - The length of training dataset: 359
+06/26 04:31:44 - mmengine - INFO - The number of instances per category in the dataset:
 +--------------+--------+
 | category     | number |
 +--------------+--------+
@@ -2051,9 +3752,70 @@ after_run:
 | tv_monitor   | 1936   |
 | sofa         | 3557   |
 +--------------+--------+
-06/26 01:17:01 - mmengine - INFO - ------------------------------
-06/26 01:17:01 - mmengine - INFO - The length of test dataset: 50
-06/26 01:17:01 - mmengine - INFO - The number of instances per category in the dataset:
+06/26 04:31:44 - mmengine - INFO - ------------------------------
+06/26 04:31:44 - mmengine - INFO - The length of test dataset: 68
+06/26 04:31:44 - mmengine - INFO - The number of instances per category in the dataset:
++----------+--------+
+| category | number |
++----------+--------+
+| table    | 154    |
+| chair    | 258    |
+| sofa     | 11     |
+| bookcase | 217    |
+| board    | 42     |
++----------+--------+
+06/26 04:31:45 - mmengine - INFO - ------------------------------
+06/26 04:31:45 - mmengine - INFO - The length of test dataset: 42
+06/26 04:31:45 - mmengine - INFO - The number of instances per category in the dataset:
++--------------+--------+
+| category     | number |
++--------------+--------+
+| door         | 33     |
+| table        | 48     |
+| chair        | 60     |
+| cabinet      | 73     |
+| window       | 31     |
+| sofa         | 16     |
+| microwave    | 6      |
+| pillow       | 30     |
+| tv_monitor   | 17     |
+| curtain      | 15     |
+| trash_can    | 15     |
+| suitcase     | 5      |
+| sink         | 17     |
+| backpack     | 15     |
+| bed          | 7      |
+| refrigerator | 16     |
+| toilet       | 7      |
++--------------+--------+
+06/26 04:31:45 - mmengine - INFO - ------------------------------
+06/26 04:31:45 - mmengine - INFO - The length of test dataset: 47
+06/26 04:31:45 - mmengine - INFO - The number of instances per category in the dataset:
++----------------+--------+
+| category       | number |
++----------------+--------+
+| cabinet        | 82     |
+| bed            | 3      |
+| chair          | 92     |
+| sofa           | 20     |
+| table          | 61     |
+| door           | 36     |
+| window         | 24     |
+| bookshelf      | 3      |
+| picture        | 35     |
+| counter        | 12     |
+| desk           | 5      |
+| curtain        | 33     |
+| refrigerator   | 3      |
+| shower curtain | 3      |
+| toilet         | 10     |
+| sink           | 21     |
+| bathtub        | 2      |
+| otherfurniture | 58     |
++----------------+--------+
+06/26 04:31:45 - mmengine - INFO - ------------------------------
+06/26 04:31:45 - mmengine - INFO - The length of test dataset: 50
+06/26 04:31:45 - mmengine - INFO - The number of instances per category in the dataset:
 +-------------------+--------+
 | category          | number |
 +-------------------+--------+
@@ -2142,9 +3904,33 @@ after_run:
 | stapler           | 0      |
 | marker            | 3      |
 +-------------------+--------+
+06/26 04:31:45 - mmengine - INFO - ------------------------------
+06/26 04:31:45 - mmengine - INFO - The length of test dataset: 549
+06/26 04:31:45 - mmengine - INFO - The number of instances per category in the dataset:
++--------------+--------+
+| category     | number |
++--------------+--------+
+| cabinet      | 2255   |
+| refrigerator | 82     |
+| shelf        | 206    |
+| stove        | 98     |
+| bed          | 181    |
+| sink         | 314    |
+| washer       | 114    |
+| toilet       | 121    |
+| bathtub      | 98     |
+| oven         | 154    |
+| dishwasher   | 25     |
+| fireplace    | 54     |
+| stool        | 186    |
+| chair        | 800    |
+| table        | 612    |
+| tv_monitor   | 281    |
+| sofa         | 381    |
++--------------+--------+
 /opt/conda/lib/python3.10/site-packages/mmdet3d/evaluation/functional/kitti_utils/eval.py:10: NumbaDeprecationWarning: The 'nopython' keyword argument was not supplied to the 'numba.jit' decorator. The implicit default value for this argument is currently False, but it will be changed to True in Numba 0.59.0. See https://numba.readthedocs.io/en/stable/reference/deprecation.html#deprecation-of-object-mode-fall-back-behaviour-when-using-jit for details.
   def get_thresholds(scores: np.ndarray, num_gt, num_sample_pts=41):
-06/26 01:17:01 - mmengine - WARNING - The prefix is not set in metric class IndoorMetric_.
+06/26 04:31:45 - mmengine - WARNING - The prefix is not set in metric class IndoorMetric_.
 Loads checkpoint by local backend from path: work_dirs/tmp/oneformer3d_1xb4_scannet.pth
 The model and loaded state dict do not match exactly
 
@@ -2152,10 +3938,26 @@ unexpected key in source state_dict: decoder.query_proj.0.weight, decoder.query_
 
 missing keys in source state_dict: decoder.input_proj.2.weight, decoder.input_proj.2.bias, decoder.outs_cls.0.weight, decoder.outs_cls.0.bias, decoder.outs_cls.2.weight, decoder.outs_cls.2.bias, decoder.out_bboxes.linear.weight, decoder.out_bboxes.linear.bias
 
-06/26 01:17:01 - mmengine - INFO - Load checkpoint from work_dirs/tmp/oneformer3d_1xb4_scannet.pth
-06/26 01:17:01 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
-06/26 01:17:01 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
-06/26 01:17:01 - mmengine - INFO - Checkpoints will be saved to /root/anweshan/mantis/unidet3d/work_dirs/unidet3d_train_spp_ar.
+06/26 04:31:48 - mmengine - INFO - Load checkpoint from work_dirs/tmp/oneformer3d_1xb4_scannet.pth
+06/26 04:31:48 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+06/26 04:31:48 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+06/26 04:31:48 - mmengine - INFO - Checkpoints will be saved to /root/anweshan/mantis/unidet3d/work_dirs/unidet3d_1xb8_scannet_s3dis_multiscan_3rscan_scannetpp_arkitscenes.
+/opt/conda/lib/python3.10/site-packages/mmdet3d/structures/points/base_points.py:136: UserWarning: point got color value beyond [0, 255]
+  warnings.warn('point got color value beyond [0, 255]')
+/opt/conda/lib/python3.10/site-packages/mmdet3d/structures/points/base_points.py:136: UserWarning: point got color value beyond [0, 255]
+  warnings.warn('point got color value beyond [0, 255]')
+/opt/conda/lib/python3.10/site-packages/mmdet3d/structures/points/base_points.py:136: UserWarning: point got color value beyond [0, 255]
+  warnings.warn('point got color value beyond [0, 255]')
+/opt/conda/lib/python3.10/site-packages/mmdet3d/structures/points/base_points.py:136: UserWarning: point got color value beyond [0, 255]
+  warnings.warn('point got color value beyond [0, 255]')
+/opt/conda/lib/python3.10/site-packages/mmdet3d/structures/points/base_points.py:136: UserWarning: point got color value beyond [0, 255]
+  warnings.warn('point got color value beyond [0, 255]')
+/opt/conda/lib/python3.10/site-packages/mmdet3d/structures/points/base_points.py:136: UserWarning: point got color value beyond [0, 255]
+  warnings.warn('point got color value beyond [0, 255]')
+/opt/conda/lib/python3.10/site-packages/mmdet3d/structures/points/base_points.py:136: UserWarning: point got color value beyond [0, 255]
+  warnings.warn('point got color value beyond [0, 255]')
+/opt/conda/lib/python3.10/site-packages/mmdet3d/structures/points/base_points.py:136: UserWarning: point got color value beyond [0, 255]
+  warnings.warn('point got color value beyond [0, 255]')
 Traceback (most recent call last):
   File "/root/anweshan/mantis/unidet3d/tools/train.py", line 135, in <module>
     main()
@@ -2165,41 +3967,51 @@ Traceback (most recent call last):
     model = self.train_loop.run()  # type: ignore
   File "/opt/conda/lib/python3.10/site-packages/mmengine/runner/loops.py", line 96, in run
     self.run_epoch()
-  File "/opt/conda/lib/python3.10/site-packages/mmengine/runner/loops.py", line 111, in run_epoch
-    for idx, data_batch in enumerate(self.dataloader):
-  File "/opt/conda/lib/python3.10/site-packages/torch/utils/data/dataloader.py", line 630, in __next__
-    data = self._next_data()
-  File "/opt/conda/lib/python3.10/site-packages/torch/utils/data/dataloader.py", line 1345, in _next_data
-    return self._process_data(data)
-  File "/opt/conda/lib/python3.10/site-packages/torch/utils/data/dataloader.py", line 1371, in _process_data
-    data.reraise()
-  File "/opt/conda/lib/python3.10/site-packages/torch/_utils.py", line 694, in reraise
-    raise exception
-FileNotFoundError: Caught FileNotFoundError in DataLoader worker process 0.
-Original Traceback (most recent call last):
-  File "/opt/conda/lib/python3.10/site-packages/torch/utils/data/_utils/worker.py", line 308, in _worker_loop
-    data = fetcher.fetch(index)
-  File "/opt/conda/lib/python3.10/site-packages/torch/utils/data/_utils/fetch.py", line 51, in fetch
-    data = [self.dataset[idx] for idx in possibly_batched_index]
-  File "/opt/conda/lib/python3.10/site-packages/torch/utils/data/_utils/fetch.py", line 51, in <listcomp>
-    data = [self.dataset[idx] for idx in possibly_batched_index]
-  File "/opt/conda/lib/python3.10/site-packages/mmengine/dataset/dataset_wrapper.py", line 170, in __getitem__
-    return self.datasets[dataset_idx][sample_idx]
-  File "/root/anweshan/mantis/unidet3d/unidet3d/arkitscenes_dataset.py", line 129, in __getitem__
-    data = self.prepare_data(idx)
-  File "/opt/conda/lib/python3.10/site-packages/mmdet3d/datasets/det3d_dataset.py", line 385, in prepare_data
-    example = self.pipeline(input_dict)
-  File "/opt/conda/lib/python3.10/site-packages/mmengine/dataset/base_dataset.py", line 60, in __call__
-    data = t(data)
-  File "/workspace/mmcv/mmcv/transforms/base.py", line 12, in __call__
-    return self.transform(results)
-  File "/opt/conda/lib/python3.10/site-packages/mmdet3d/datasets/transforms/loading.py", line 646, in transform
-    points = self._load_points(pts_file_path)
-  File "/opt/conda/lib/python3.10/site-packages/mmdet3d/datasets/transforms/loading.py", line 622, in _load_points
-    pts_bytes = get(pts_filename, backend_args=self.backend_args)
-  File "/opt/conda/lib/python3.10/site-packages/mmengine/fileio/io.py", line 181, in get
-    return backend.get(filepath)
-  File "/opt/conda/lib/python3.10/site-packages/mmengine/fileio/backends/local_backend.py", line 33, in get
-    with open(filepath, 'rb') as f:
-FileNotFoundError: [Errno 2] No such file or directory: 'data/arkitscenes/offline_prepared_data/41126947_point.bin'
+  File "/opt/conda/lib/python3.10/site-packages/mmengine/runner/loops.py", line 112, in run_epoch
+    self.run_iter(idx, data_batch)
+  File "/opt/conda/lib/python3.10/site-packages/mmengine/runner/loops.py", line 128, in run_iter
+    outputs = self.runner.model.train_step(
+  File "/opt/conda/lib/python3.10/site-packages/mmengine/model/base_model/base_model.py", line 114, in train_step
+    losses = self._run_forward(data, mode='loss')  # type: ignore
+  File "/opt/conda/lib/python3.10/site-packages/mmengine/model/base_model/base_model.py", line 346, in _run_forward
+    results = self(**data, mode=mode)
+  File "/opt/conda/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/opt/conda/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/opt/conda/lib/python3.10/site-packages/mmdet3d/models/detectors/base.py", line 75, in forward
+    return self.loss(inputs, data_samples, **kwargs)
+  File "/root/anweshan/mantis/unidet3d/unidet3d/unidet3d.py", line 362, in loss
+    loss = self.criterion(x, sp_gt_instances, datasets_names)
+  File "/root/anweshan/mantis/unidet3d/unidet3d/criterion.py", line 169, in __call__
+    loss = self.get_layer_loss(pred, insts, datasets_names)
+  File "/root/anweshan/mantis/unidet3d/unidet3d/criterion.py", line 92, in get_layer_loss
+    indices.append(self.matcher(pred_instances, gt_instances,
+  File "/opt/conda/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/root/anweshan/mantis/unidet3d/unidet3d/criterion.py", line 310, in __call__
+    cost_values.append(cost(pred_instances, gt_instances))
+  File "/root/anweshan/mantis/unidet3d/unidet3d/criterion.py", line 265, in __call__
+    cost = self.loss_rotated(_bbox_to_loss(pred_bboxes),
+  File "/opt/conda/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1518, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/opt/conda/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1527, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/root/anweshan/mantis/unidet3d/unidet3d/rotated_iou_loss.py", line 144, in forward
+    loss = self.loss_weight * self.loss(
+  File "/opt/conda/lib/python3.10/site-packages/mmdet/models/losses/utils.py", line 121, in wrapper
+    loss = loss_func(pred, target, **kwargs)
+  File "/root/anweshan/mantis/unidet3d/unidet3d/rotated_iou_loss.py", line 81, in rotated_diou_3d_loss
+    diou_loss = 1 - diff_diou_rotated_3d(pred, target)
+  File "/root/anweshan/mantis/unidet3d/unidet3d/rotated_iou_loss.py", line 27, in diff_diou_rotated_3d
+    intersection, _ = oriented_box_intersection_2d(corners1, corners2)
+  File "/workspace/mmcv/mmcv/ops/diff_iou_rotated.py", line 223, in oriented_box_intersection_2d
+    sorted_indices = sort_indices(vertices, mask)
+  File "/workspace/mmcv/mmcv/ops/diff_iou_rotated.py", line 181, in sort_indices
+    return SortVertices.apply(vertices_normalized, mask, num_valid).long()
+  File "/opt/conda/lib/python3.10/site-packages/torch/autograd/function.py", line 539, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+  File "/workspace/mmcv/mmcv/ops/diff_iou_rotated.py", line 21, in forward
+    idx = ext_module.diff_iou_rotated_sort_vertices_forward(
+RuntimeError: diff_iou_rotated_sort_vertices_forward_impl: implementation for device cuda:0 not found.
 
